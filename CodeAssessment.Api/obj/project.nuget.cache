@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "dgSpecHash": "gKwVZjJwMbk=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\BartvandenHoven\\OneDrive - Magnus Energy\\Documenten\\School\\S8 temp\\Sprint 4\\ProtoTypeAzure\\CodeAssessment\\CodeAssessment.Api\\CodeAssessment.Api.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
+    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.0\\microsoft.aspnetcore.openapi.10.0.0.nupkg.sha512",
+    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\9.0.0\\microsoft.bcl.asyncinterfaces.9.0.0.nupkg.sha512",
+    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\microsoft.codeanalysis\\5.0.0\\microsoft.codeanalysis.5.0.0.nupkg.sha512",
+    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\3.11.0\\microsoft.codeanalysis.analyzers.3.11.0.nupkg.sha512",
+    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\microsoft.codeanalysis.common\\5.0.0\\microsoft.codeanalysis.common.5.0.0.nupkg.sha512",
+    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\microsoft.codeanalysis.csharp\\5.0.0\\microsoft.codeanalysis.csharp.5.0.0.nupkg.sha512",
+    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\microsoft.codeanalysis.csharp.workspaces\\5.0.0\\microsoft.codeanalysis.csharp.workspaces.5.0.0.nupkg.sha512",
+    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\microsoft.codeanalysis.visualbasic\\5.0.0\\microsoft.codeanalysis.visualbasic.5.0.0.nupkg.sha512",
+    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\microsoft.codeanalysis.visualbasic.workspaces\\5.0.0\\microsoft.codeanalysis.visualbasic.workspaces.5.0.0.nupkg.sha512",
+    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\microsoft.codeanalysis.workspaces.common\\5.0.0\\microsoft.codeanalysis.workspaces.common.5.0.0.nupkg.sha512",
+    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512",
+    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\openai\\2.7.0\\openai.2.7.0.nupkg.sha512",
+    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\system.clientmodel\\1.8.1\\system.clientmodel.1.8.1.nupkg.sha512",
+    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\system.composition\\9.0.0\\system.composition.9.0.0.nupkg.sha512",
+    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\system.composition.attributedmodel\\9.0.0\\system.composition.attributedmodel.9.0.0.nupkg.sha512",
+    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\system.composition.convention\\9.0.0\\system.composition.convention.9.0.0.nupkg.sha512",
+    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\system.composition.hosting\\9.0.0\\system.composition.hosting.9.0.0.nupkg.sha512",
+    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\system.composition.runtime\\9.0.0\\system.composition.runtime.9.0.0.nupkg.sha512",
+    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\system.composition.typedparts\\9.0.0\\system.composition.typedparts.9.0.0.nupkg.sha512",
+    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\system.memory.data\\8.0.1\\system.memory.data.8.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

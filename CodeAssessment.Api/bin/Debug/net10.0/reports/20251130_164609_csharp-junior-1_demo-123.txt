@@ -1,0 +1,260 @@
+﻿===== CODE ASSESSMENT RAPPORT =====
+Datum/tijd (UTC): 2025-11-30 16:46:09
+
+== Kandidaat ==
+Id      : demo-123
+Naam    : Test Kandidaat
+Email   : test@example.com
+
+== Opdracht ==
+AssignmentId  : csharp-junior-1
+AssignmentName: Bestelbedrag met btw
+
+== Samenvatting ==
+Einds score     : 9
+AI score        : 9
+Compileert      : JA
+Alle tests groen: JA
+
+== AI review ==
+Score: 9 / 10
+
+Algemene feedback:
+The code is well-structured and follows good practices. It correctly calculates the total price including VAT for a list of order lines. The use of exceptions for input validation is appropriate, and the code is clean and readable. However, there are minor improvements that can be made for better robustness and clarity.
+
+Issues:
+- Regels 20, Severity: Warning
+  Suggestie: Consider using a more descriptive exception message or a custom exception type for better clarity when handling invalid input data.
+- Regels 38, Severity: Info
+  Suggestie: Consider logging the exception details when an ArgumentException is thrown to aid in debugging and monitoring.
+
+== Static analysis ==
+Analyzer: .NET Code Analysis (Roslyn + analyzers)
+Aantal diagnostics: 26
+
+- CA1510 [Warning] @ 20:13
+  Use 'ArgumentNullException.ThrowIfNull' instead of explicitly throwing a new exception instance
+- RCS1001 [Warning] @ 34:21
+  Add braces to if statement (when expression spans over multiple lines)
+- RCS1001 [Warning] @ 39:21
+  Add braces to if statement (when expression spans over multiple lines)
+- RCS1102 [Warning] @ 14:18
+  Make class static
+- RCS1124 [Warning] @ 46:13
+  Inline local variable
+- SA1200 [Warning] @ 2:3
+  Using directive should appear within a namespace declaration
+- SA1200 [Warning] @ 3:3
+  Using directive should appear within a namespace declaration
+- SA1400 [Warning] @ 50:21
+  Element 'Main' should declare an access modifier
+- SA1402 [Warning] @ 7:18
+  File may only contain a single type
+- SA1413 [Warning] @ 55:17
+  Use trailing comma in multi-line initializers
+- SA1503 [Warning] @ 21:17
+  Braces should not be omitted
+- SA1503 [Warning] @ 24:17
+  Braces should not be omitted
+- SA1503 [Warning] @ 31:21
+  Braces should not be omitted
+- SA1516 [Warning] @ 10:1
+  Elements should be separated by blank line
+- SA1516 [Warning] @ 11:1
+  Elements should be separated by blank line
+- SA1517 [Warning] @ 1:1
+  Code should not contain blank lines at start of file
+- SA1519 [Warning] @ 34:21
+  Braces should not be omitted from multi-line child statement
+- SA1519 [Warning] @ 39:21
+  Braces should not be omitted from multi-line child statement
+- SA1600 [Warning] @ 10:20
+  Elements should be documented
+- SA1600 [Warning] @ 9:23
+  Elements should be documented
+- SA1600 [Warning] @ 7:18
+  Elements should be documented
+- SA1600 [Warning] @ 11:24
+  Elements should be documented
+- SA1600 [Warning] @ 14:18
+  Elements should be documented
+- SA1600 [Warning] @ 18:31
+  Elements should be documented
+- SA1633 [Warning] @ 1:1
+  The file header is missing or not located at the top of the file.
+- SA1649 [Warning] @ 7:18
+  File name should match first type name
+
+== Runtime ==
+ExitCode         : 0
+RunDurationMs    : 233
+RunTotalCpuTimeMs: 109
+RunAverageCpuPct : 561.4
+RunPeakWorkingSet: 0 MB
+
+Fases:
+- init
+  DurationMs    : 1263
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- restore
+  DurationMs    : 819
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- build
+  DurationMs    : 1560
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- publish
+  DurationMs    : 1179
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- run
+  DurationMs    : 233
+  CpuTimeMs     : 109
+  PeakWorkingSet: 0 MB
+  Samples count : 1
+  Samples range : 219 ms → 219 ms
+
+StdOut (snippet):
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+
+
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  UserApp -> C:\Users\BartvandenHoven\AppData\Local\Temp\run-analyze-8fce9f9077b641da9c01a794865a1700\UserApp\bin\Release\net10.0\UserApp.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.24
+
+
+  Deter...
+
+== Tests ==
+Binary score: GOED
+Total       : 6
+Passed      : 6
+Failed      : 0
+
+Details per test:
+- CodeAssessment.Tests.Template.CalculateTotalWithVatTests.NegativeOrZeroQuantity_ThrowsArgumentException → Passed
+- CodeAssessment.Tests.Template.CalculateTotalWithVatTests.NullOrderLine_IsIgnored → Passed
+- CodeAssessment.Tests.Template.CalculateTotalWithVatTests.EmptyList_ReturnsZero → Passed
+- CodeAssessment.Tests.Template.CalculateTotalWithVatTests.NegativeUnitPrice_ThrowsArgumentException → Passed
+- CodeAssessment.Tests.Template.CalculateTotalWithVatTests.MultipleLines_ComputesCorrectTotal → Passed
+- CodeAssessment.Tests.Template.CalculateTotalWithVatTests.NullList_ThrowsArgumentNullException → Passed
+
+== dotnet test stdout ==
+  Determining projects to restore...
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-4be3cd73a98b4223af5abbe6f9136816\Tests\Tests.csproj : warning NU1603: Tests depends on Microsoft.NET.Test.Sdk (>= 17.10.1) but Microsoft.NET.Test.Sdk 17.10.1 was not found. Microsoft.NET.Test.Sdk 17.11.0 was resolved instead.
+  Restored C:\Users\BartvandenHoven\AppData\Local\Temp\run-4be3cd73a98b4223af5abbe6f9136816\Tests\Tests.csproj (in 196 ms).
+  1 of 2 projects are up-to-date for restore.
+
+
+  Determining projects to restore...
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-4be3cd73a98b4223af5abbe6f9136816\Tests\Tests.csproj : warning NU1603: Tests depends on Microsoft.NET.Test.Sdk (>= 17.10.1) but Microsoft.NET.Test.Sdk 17.10.1 was not found. Microsoft.NET.Test.Sdk 17.11.0 was resolved instead.
+  All projects are up-to-date for restore.
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-4be3cd73a98b4223af5abbe6f9136816\Tests\Tests.csproj : warning NU1603: Tests depends on Microsoft.NET.Test.Sdk (>= 17.10.1) but Microsoft.NET.Test.Sdk 17.10.1 was not found. Microsoft.NET.Test.Sdk 17.11.0 was resolved instead.
+  AssesmentSolution -> C:\Users\BartvandenHoven\AppData\Local\Temp\run-4be3cd73a98b4223af5abbe6f9136816\AssesmentSolution\bin\Release\net10.0\AssesmentSolution.dll
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-4be3cd73a98b4223af5abbe6f9136816\Tests\Test.cs(84,43): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [C:\Users\BartvandenHoven\AppData\Local\Temp\run-4be3cd73a98b4223af5abbe6f9136816\Tests\Tests.csproj]
+  Tests -> C:\Users\BartvandenHoven\AppData\Local\Temp\run-4be3cd73a98b4223af5abbe6f9136816\Tests\bin\Release\net10.0\Tests.dll
+
+Build succeeded.
+
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-4be3cd73a98b4223af5abbe6f9136816\Tests\Tests.csproj : warning NU1603: Tests depends on Microsoft.NET.Test.Sdk (>= 17.10.1) but Microsoft.NET.Test.Sdk 17.10.1 was not found. Microsoft.NET.Test.Sdk 17.11.0 was resolved instead.
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-4be3cd73a98b4223af5abbe6f9136816\Tests\Tests.csproj : warning NU1603: Tests depends on Microsoft.NET.Test.Sdk (>= 17.10.1) but Microsoft.NET.Test.Sdk 17.10.1 was not found. Microsoft.NET.Test.Sdk 17.11.0 was resolved instead.
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-4be3cd73a98b4223af5abbe6f9136816\Tests\Test.cs(84,43): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [C:\Users\BartvandenHoven\AppData\Local\Temp\run-4be3cd73a98b4223af5abbe6f9136816\Tests\Tests.csproj]
+    3 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:02.15
+
+
+  Determining projects to restore...
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-4be3cd73a98b4223af5abbe6f9136816\Tests\Tests.csproj : warning NU1603: Tests depends on Microsoft.NET.Test.Sdk (>= 17.10.1) but Microsoft.NET.Test.Sdk 17.10.1 was not found. Microsoft.NET.Test.Sdk 17.11.0 was resolved instead.
+  All projects are up-to-date for restore.
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-4be3cd73a98b4223af5abbe6f9136816\Tests\Tests.csproj : warning NU1603: Tests depends on Microsoft.NET.Test.Sdk (>= 17.10.1) but Microsoft.NET.Test.Sdk 17.10.1 was not found. Microsoft.NET.Test.Sdk 17.11.0 was resolved instead.
+  AssesmentSolution -> C:\Users\BartvandenHoven\AppData\Local\Temp\run-4be3cd73a98b4223af5abbe6f9136816\AssesmentSolution\bin\Release\net10.0\AssesmentSolution.dll
+  Tests -> C:\Users\BartvandenHoven\AppData\Local\Temp\run-4be3cd73a98b4223af5abbe6f9136816\Tests\bin\Release\net10.0\Tests.dll
+Test run for C:\Users\BartvandenHoven\AppData\Local\Temp\run-4be3cd73a98b4223af5abbe6f9136816\Tests\bin\Release\net10.0\Tests.dll (.NETCoreApp,Version=v10.0)
+VSTest version 18.0.1 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+Results File: C:\Users\BartvandenHoven\AppData\Local\Temp\run-4be3cd73a98b4223af5abbe6f9136816\Tests\TestResults\results.trx
+
+Passed!  - Failed:     0, Passed:     6, Skipped:     0, Total:     6, Duration: 340 ms - Tests.dll (net10.0)
+
+
+== Ingezonden code ==
+
+  using System;
+  using System.Collections.Generic;
+
+  namespace Assessment.Junior
+  {
+    public class OrderLine
+    {
+        public string ProductName { get; set; } = string.Empty;
+        public int Quantity { get; set; }
+        public decimal UnitPrice { get; set; }
+    }
+
+    public class Program
+    {
+        private const decimal VatRate = 0.21m;
+
+        public static decimal CalculateTotalWithVat(List<OrderLine> lines)
+        {
+            if (lines == null)
+                throw new ArgumentNullException(nameof(lines));
+
+            if (lines.Count == 0)
+                return 0m;
+
+            decimal subtotal = 0m;
+
+            foreach (var line in lines)
+            {
+                if (line == null)
+                    continue; // defensive: sla null-regels over
+
+                if (line.Quantity <= 0)
+                    throw new ArgumentException(
+                        $"Quantity must be > 0 for product '{line.ProductName}'.",
+                        nameof(lines));
+
+                if (line.UnitPrice < 0)
+                    throw new ArgumentException(
+                        $"UnitPrice must be >= 0 for product '{line.ProductName}'.",
+                        nameof(lines));
+
+                subtotal += line.Quantity * line.UnitPrice;
+            }
+
+            decimal total = subtotal * (1m + VatRate);
+            return total;
+        }
+
+        static void Main()
+        {
+            var lines = new List<OrderLine>
+            {
+                new OrderLine { ProductName = "C# in Depth", Quantity = 2, UnitPrice = 39.95m },
+                new OrderLine { ProductName = "Clean Code", Quantity = 1, UnitPrice = 34.50m }
+            };
+
+            var total = CalculateTotalWithVat(lines);
+
+            Console.WriteLine($"Totaal incl. btw: {total:0.00} EUR");
+        }
+    }
+  }

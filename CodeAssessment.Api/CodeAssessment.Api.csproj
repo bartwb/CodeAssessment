@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CodeAssessment.Ai\CodeAssessment.Ai.csproj" />
+    <ProjectReference Include="..\CodeAssessment.Static\CodeAssessment.Static.csproj" />
+    <ProjectReference Include="..\CodeAssessment.Runtime\CodeAssessment.Runtime.csproj" />
+    <ProjectReference Include="..\CodeAssessment.Tests\CodeAssessment.Tests.csproj" />
+    <ProjectReference Include="..\CodeAssessment.Shared\CodeAssessment.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+  <Content Include="analyzers\dotnet\**\*.*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup> 
+
+  <ItemGroup>
+  <!-- Zorg dat alle C#-bestanden onder templates/ NIET worden gecompileerd -->
+  <Compile Remove="templates\**\*.cs" />
+
+  <!-- Maar kopieer alles wél naar de outputmap (bin\...\templates\...) -->
+  <None Include="templates\**\*.*">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </None>
+</ItemGroup>
+
+</Project>

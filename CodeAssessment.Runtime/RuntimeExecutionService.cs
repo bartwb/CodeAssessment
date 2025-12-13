@@ -1,0 +1,97 @@
+using CodeAssessment.Shared;
+
+namespace CodeAssessment.Runtime;
+
+public class RuntimeExecutionService : IRuntimeExecutionService
+{
+    public async Task<RunResponse> RunAsync(CodeRequest req)
+    {
+        var work = Path.Combine(Path.GetTempPath(), $"run-{Guid.NewGuid():N}");
+        Directory.CreateDirectory(work);
+
+        string stdOut = "";
+        string stdErr = "";
+        int exitCode = -1;
+
+        try
+        {
+            // 1) nieuw console-project aanmaken
+            var init = await ProcessRunner.RunAsync("dotnet", "new console -n UserApp", work, 60_000);
+            if (init.ExitCode != 0)
+            {
+                return new RunResponse(
+                    Success: false,
+                    StdOut: init.StdOut,
+                    StdErr: init.StdErr,
+                    ExitCode: init.ExitCode
+                );
+            }
+
+            var projDir = Path.Combine(work, "UserApp");
+
+            // 2) user code in Program.cs zetten
+            var programPath = Path.Combine(projDir, "Program.cs");
+            await File.WriteAllTextAsync(programPath, req.Code);
+
+            // 3) restore
+            var restore = await ProcessRunner.RunAsync("dotnet", "restore", projDir, 120_000);
+            if (restore.ExitCode != 0)
+            {
+                return new RunResponse(
+                    Success: false,
+                    StdOut: restore.StdOut,
+                    StdErr: restore.StdErr,
+                    ExitCode: restore.ExitCode
+                );
+            }
+
+            // 4) build (Release)
+            var build = await ProcessRunner.RunAsync("dotnet", "build --configuration Release", projDir, 180_000);
+            if (build.ExitCode != 0)
+            {
+                stdOut = string.Join("\n\n", restore.StdOut, build.StdOut);
+                stdErr = string.Join("\n\n", restore.StdErr, build.StdErr);
+                return new RunResponse(
+                    Success: false,
+                    StdOut: stdOut,
+                    StdErr: stdErr,
+                    ExitCode: build.ExitCode
+                );
+            }
+
+            // 5) run zonder opnieuw te builden
+            var run = await ProcessRunner.RunAsync(
+                "dotnet",
+                "run --configuration Release --no-build",
+                projDir,
+                120_000
+            );
+
+            stdOut = string.Join("\n\n", restore.StdOut, build.StdOut) + "\n\n" + run.StdOut;
+            stdErr = string.Join("\n\n", restore.StdErr, build.StdErr) + "\n\n" + run.StdErr;
+            exitCode = run.ExitCode;
+
+            var success = run.ExitCode == 0;
+
+            return new RunResponse(
+                Success: success,
+                StdOut: stdOut,
+                StdErr: stdErr,
+                ExitCode: exitCode
+            );
+        }
+        catch (Exception ex)
+        {
+            return new RunResponse(
+                Success: false,
+                StdOut: stdOut,
+                StdErr: stdErr + "\n" + ex.Message,
+                ExitCode: exitCode
+            );
+        }
+        finally
+        {
+            try { Directory.Delete(work, true); } catch { }
+        }
+    }
+}

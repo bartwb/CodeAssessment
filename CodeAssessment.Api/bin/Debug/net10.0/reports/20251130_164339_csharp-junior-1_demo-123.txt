@@ -1,0 +1,231 @@
+﻿===== CODE ASSESSMENT RAPPORT =====
+Datum/tijd (UTC): 2025-11-30 16:43:39
+
+== Kandidaat ==
+Id      : demo-123
+Naam    : Test Kandidaat
+Email   : test@example.com
+
+== Opdracht ==
+AssignmentId  : csharp-junior-1
+AssignmentName: Bestelbedrag met btw
+
+== Samenvatting ==
+Einds score     : 5
+AI score        : 5
+Compileert      : JA
+Alle tests groen: NEE
+
+== AI review ==
+Score: 5 / 10
+
+Algemene feedback:
+The code is a good starting point for a simple order processing application. However, it lacks implementation for the main functionality, which is calculating the total with VAT. The code is clean and follows basic C# conventions, but it needs to handle potential exceptions and validate inputs. Additionally, the VAT calculation logic is missing, which is crucial for the program's correctness.
+
+Issues:
+- Regels 14, Severity: Error
+  Suggestie: The method CalculateTotalWithVat is not implemented. Implement the logic to calculate the total price including VAT. Consider iterating over the 'lines' list, calculating the total for each OrderLine by multiplying Quantity and UnitPrice, and then applying the VAT rate.
+- Regels 14, Severity: Warning
+  Suggestie: The method CalculateTotalWithVat should handle potential null inputs. Add a check to ensure 'lines' is not null before processing, and throw an ArgumentNullException if it is.
+- Regels 14, Severity: Warning
+  Suggestie: Consider adding exception handling within the CalculateTotalWithVat method to manage unexpected errors during calculation, such as overflow exceptions.
+- Regels 14, Severity: Info
+  Suggestie: Define a constant for the VAT rate to make the code more maintainable and clear. This will allow easy adjustments to the VAT rate in the future.
+
+== Static analysis ==
+Analyzer: .NET Code Analysis (Roslyn + analyzers)
+Aantal diagnostics: 19
+
+- CA1852 [Warning] @ 13:11
+  Type 'Program' can be sealed because it has no subtypes in its containing assembly and is not externally visible
+- RCS1102 [Warning] @ 13:11
+  Make class static
+- SA1200 [Warning] @ 1:1
+  Using directive should appear within a namespace declaration
+- SA1200 [Warning] @ 2:1
+  Using directive should appear within a namespace declaration
+- SA1400 [Warning] @ 23:21
+  Element 'Main' should declare an access modifier
+- SA1400 [Warning] @ 13:11
+  Element 'Program' should declare an access modifier
+- SA1402 [Warning] @ 6:18
+  File may only contain a single type
+- SA1413 [Warning] @ 28:17
+  Use trailing comma in multi-line initializers
+- SA1512 [Warning] @ 18:13
+  Single-line comments should not be followed by blank line
+- SA1516 [Warning] @ 9:1
+  Elements should be separated by blank line
+- SA1516 [Warning] @ 10:1
+  Elements should be separated by blank line
+- SA1600 [Warning] @ 9:20
+  Elements should be documented
+- SA1600 [Warning] @ 13:11
+  Elements should be documented
+- SA1600 [Warning] @ 10:24
+  Elements should be documented
+- SA1600 [Warning] @ 6:18
+  Elements should be documented
+- SA1600 [Warning] @ 8:23
+  Elements should be documented
+- SA1600 [Warning] @ 15:31
+  Elements should be documented
+- SA1633 [Warning] @ 1:1
+  The file header is missing or not located at the top of the file.
+- SA1649 [Warning] @ 6:18
+  File name should match first type name
+
+== Runtime ==
+ExitCode         : -532462766
+RunDurationMs    : 10509
+RunTotalCpuTimeMs: 78
+RunAverageCpuPct : 8.9
+RunPeakWorkingSet: 25.9 MB
+
+Fases:
+- init
+  DurationMs    : 1211
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- restore
+  DurationMs    : 816
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- build
+  DurationMs    : 1315
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- publish
+  DurationMs    : 1167
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- run
+  DurationMs    : 10509
+  CpuTimeMs     : 78
+  PeakWorkingSet: 25.9 MB
+  Samples count : 21
+  Samples range : 517 ms → 10505 ms
+
+StdOut (snippet):
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+
+
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-analyze-427f541fe1a14e1698fff7303f36438e\UserApp\Program.cs(8,23): warning CS8618: Non-nullable property 'ProductName' must contain a non-null value when exiting constructor. Consider ad...
+
+StdErr:
+
+
+
+
+
+
+Unhandled exception. System.NotImplementedException: The method or operation is not implemented.
+   at Assessment.Junior.Program.CalculateTotalWithVat(List`1 lines) in C:\Users\BartvandenHoven\AppData\Local\Temp\run-analyze-427f541fe1a14e1698fff7303f36438e\UserApp\Program.cs:line 20
+   at Assessment.Junior.Program.Main() in C:\Users\BartvandenHoven\AppData\Local\Temp\run-analyze-427f541fe1a14e1698fff7303f36438e\UserApp\Program.cs:line 31
+
+
+== Tests ==
+Binary score: FOUT
+Total       : 0
+Passed      : 0
+Failed      : 0
+
+Geen individuele tests geregistreerd.
+
+== dotnet test stdout ==
+  Determining projects to restore...
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj : warning NU1603: Tests depends on Microsoft.NET.Test.Sdk (>= 17.10.1) but Microsoft.NET.Test.Sdk 17.10.1 was not found. Microsoft.NET.Test.Sdk 17.11.0 was resolved instead.
+  Restored C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj (in 219 ms).
+  1 of 2 projects are up-to-date for restore.
+
+
+  Determining projects to restore...
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj : warning NU1603: Tests depends on Microsoft.NET.Test.Sdk (>= 17.10.1) but Microsoft.NET.Test.Sdk 17.10.1 was not found. Microsoft.NET.Test.Sdk 17.11.0 was resolved instead.
+  All projects are up-to-date for restore.
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj : warning NU1603: Tests depends on Microsoft.NET.Test.Sdk (>= 17.10.1) but Microsoft.NET.Test.Sdk 17.10.1 was not found. Microsoft.NET.Test.Sdk 17.11.0 was resolved instead.
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\AssesmentSolution\Solution.cs(8,23): warning CS8618: Non-nullable property 'ProductName' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable. [C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\AssesmentSolution\AssesmentSolution.csproj]
+  AssesmentSolution -> C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\AssesmentSolution\bin\Release\net10.0\AssesmentSolution.dll
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Test.cs(33,25): error CS0122: 'Program' is inaccessible due to its protection level [C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj]
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Test.cs(44,23): error CS0122: 'Program' is inaccessible due to its protection level [C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj]
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Test.cs(58,23): error CS0122: 'Program' is inaccessible due to its protection level [C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj]
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Test.cs(74,23): error CS0122: 'Program' is inaccessible due to its protection level [C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj]
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Test.cs(84,43): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj]
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Test.cs(92,25): error CS0122: 'Program' is inaccessible due to its protection level [C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj]
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Test.cs(111,25): error CS0122: 'Program' is inaccessible due to its protection level [C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj]
+
+Build FAILED.
+
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj : warning NU1603: Tests depends on Microsoft.NET.Test.Sdk (>= 17.10.1) but Microsoft.NET.Test.Sdk 17.10.1 was not found. Microsoft.NET.Test.Sdk 17.11.0 was resolved instead.
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj : warning NU1603: Tests depends on Microsoft.NET.Test.Sdk (>= 17.10.1) but Microsoft.NET.Test.Sdk 17.10.1 was not found. Microsoft.NET.Test.Sdk 17.11.0 was resolved instead.
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\AssesmentSolution\Solution.cs(8,23): warning CS8618: Non-nullable property 'ProductName' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable. [C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\AssesmentSolution\AssesmentSolution.csproj]
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Test.cs(84,43): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj]
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Test.cs(33,25): error CS0122: 'Program' is inaccessible due to its protection level [C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj]
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Test.cs(44,23): error CS0122: 'Program' is inaccessible due to its protection level [C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj]
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Test.cs(58,23): error CS0122: 'Program' is inaccessible due to its protection level [C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj]
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Test.cs(74,23): error CS0122: 'Program' is inaccessible due to its protection level [C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj]
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Test.cs(92,25): error CS0122: 'Program' is inaccessible due to its protection level [C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj]
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Test.cs(111,25): error CS0122: 'Program' is inaccessible due to its protection level [C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj]
+    4 Warning(s)
+    6 Error(s)
+
+Time Elapsed 00:00:01.60
+
+
+  Determining projects to restore...
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj : warning NU1603: Tests depends on Microsoft.NET.Test.Sdk (>= 17.10.1) but Microsoft.NET.Test.Sdk 17.10.1 was not found. Microsoft.NET.Test.Sdk 17.11.0 was resolved instead.
+  All projects are up-to-date for restore.
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj : warning NU1603: Tests depends on Microsoft.NET.Test.Sdk (>= 17.10.1) but Microsoft.NET.Test.Sdk 17.10.1 was not found. Microsoft.NET.Test.Sdk 17.11.0 was resolved instead.
+  AssesmentSolution -> C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\AssesmentSolution\bin\Release\net10.0\AssesmentSolution.dll
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Test.cs(33,25): error CS0122: 'Program' is inaccessible due to its protection level [C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj]
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Test.cs(44,23): error CS0122: 'Program' is inaccessible due to its protection level [C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj]
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Test.cs(58,23): error CS0122: 'Program' is inaccessible due to its protection level [C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj]
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Test.cs(74,23): error CS0122: 'Program' is inaccessible due to its protection level [C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj]
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Test.cs(84,43): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj]
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Test.cs(92,25): error CS0122: 'Program' is inaccessible due to its protection level [C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj]
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Test.cs(111,25): error CS0122: 'Program' is inaccessible due to its protection level [C:\Users\BartvandenHoven\AppData\Local\Temp\run-03ed6966ddbc400d855fb969a13c7613\Tests\Tests.csproj]
+
+
+== Ingezonden code ==
+using System;
+using System.Collections.Generic;
+
+namespace Assessment.Junior
+{
+    public class OrderLine
+    {
+        public string ProductName { get; set; }
+        public int Quantity { get; set; }
+        public decimal UnitPrice { get; set; }
+    }
+
+    class Program
+    {
+        public static decimal CalculateTotalWithVat(List<OrderLine> lines)
+        {
+            // TODO:
+            // Schrijf de uitwerking van de methode
+
+            throw new NotImplementedException();
+        }
+
+        static void Main()
+        {
+            var lines = new List<OrderLine>
+            {
+                new OrderLine { ProductName = "C# in Depth", Quantity = 2, UnitPrice = 39.95m },
+                new OrderLine { ProductName = "Clean Code", Quantity = 1, UnitPrice = 34.50m }
+            };
+
+            var total = CalculateTotalWithVat(lines);
+
+            Console.WriteLine($"Totaal incl. btw: {total:0.00} EUR");
+        }
+    }
+}

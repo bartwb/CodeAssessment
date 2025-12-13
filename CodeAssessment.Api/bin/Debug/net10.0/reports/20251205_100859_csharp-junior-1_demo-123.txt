@@ -1,0 +1,317 @@
+﻿===== CODE ASSESSMENT RAPPORT =====
+Datum/tijd (UTC): 2025-12-05 10:08:59
+
+== Kandidaat ==
+Id      : demo-123
+Naam    : Test Kandidaat
+Email   : test@example.com
+
+== Opdracht ==
+AssignmentId  : csharp-junior-1
+AssignmentName: Bestelbedrag met btw
+
+== Samenvatting ==
+Einds score     : 4
+AI score        : 4
+Compileert      : JA
+Alle tests groen: NEE
+
+== AI review ==
+Score: 4 / 10
+
+Algemene feedback:
+The code has several issues related to correctness, performance, and maintainability. It lacks input validation, uses incorrect data types for financial calculations, and has hardcoded values without explanation. The code could benefit from better error handling, use of constants, and improved readability.
+
+Issues:
+- Regels 12, Severity: Warning
+  Suggestie: Consider initializing properties with default values or using constructor initialization to ensure all properties are set.
+- Regels 18, Severity: Warning
+  Suggestie: Use a constant for the VAT rate instead of a magic number. This improves readability and maintainability.
+- Regels 20, Severity: Error
+  Suggestie: Add a null-check for the 'lines' parameter and throw an ArgumentNullException if it is null. This prevents potential null reference exceptions.
+- Regels 21, Severity: Error
+  Suggestie: Use 'decimal' instead of 'double' for financial calculations to avoid precision issues.
+- Regels 25, Severity: Warning
+  Suggestie: Validate that 'Quantity' is greater than 0 and 'UnitPrice' is non-negative to ensure logical correctness.
+- Regels 31, Severity: Warning
+  Suggestie: Perform calculations using 'decimal' to maintain precision, and avoid casting between 'double' and 'decimal'.
+- Regels 34, Severity: Warning
+  Suggestie: Use a format string with culture information for displaying currency values to ensure correct formatting based on locale.
+
+== Static analysis ==
+Analyzer: .NET Code Analysis (Roslyn + analyzers)
+Aantal diagnostics: 22
+
+- RCS1058 [Warning] @ 30:21
+  Use compound assignment
+- RCS1058 [Warning] @ 35:13
+  Use compound assignment
+- RCS1102 [Warning] @ 15:18
+  Make class static
+- RCS1123 [Warning] @ 30:39
+  Add parentheses when necessary
+- RCS1181 [Warning] @ 9:9
+  Convert comment to documentation comment
+- RCS1181 [Warning] @ 17:9
+  Convert comment to documentation comment
+- SA1200 [Warning] @ 2:1
+  Using directive should appear within a namespace declaration
+- SA1200 [Warning] @ 3:1
+  Using directive should appear within a namespace declaration
+- SA1400 [Warning] @ 41:21
+  Element 'Main' should declare an access modifier
+- SA1402 [Warning] @ 7:18
+  File may only contain a single type
+- SA1407 [Warning] @ 30:39
+  Arithmetic expressions should declare precedence
+- SA1516 [Warning] @ 11:1
+  Elements should be separated by blank line
+- SA1516 [Warning] @ 12:1
+  Elements should be separated by blank line
+- SA1517 [Warning] @ 1:1
+  Code should not contain blank lines at start of file
+- SA1600 [Warning] @ 12:24
+  Elements should be documented
+- SA1600 [Warning] @ 10:23
+  Elements should be documented
+- SA1600 [Warning] @ 11:20
+  Elements should be documented
+- SA1600 [Warning] @ 15:18
+  Elements should be documented
+- SA1600 [Warning] @ 7:18
+  Elements should be documented
+- SA1600 [Warning] @ 18:31
+  Elements should be documented
+- SA1633 [Warning] @ 1:1
+  The file header is missing or not located at the top of the file.
+- SA1649 [Warning] @ 7:18
+  File name should match first type name
+
+== Runtime ==
+ExitCode         : 0
+RunDurationMs    : 317
+RunTotalCpuTimeMs: 125
+RunAverageCpuPct : 473.2
+RunPeakWorkingSet: 0 MB
+
+Fases:
+- init
+  DurationMs    : 2567
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- restore
+  DurationMs    : 1463
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- build
+  DurationMs    : 2873
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- publish
+  DurationMs    : 2347
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- run
+  DurationMs    : 317
+  CpuTimeMs     : 125
+  PeakWorkingSet: 0 MB
+  Samples count : 1
+  Samples range : 288 ms → 288 ms
+
+StdOut (snippet):
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+
+
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-analyze-db3fe4167d7b4fc69ed7ec5ac8f52449\UserApp\Program.cs(10,23): warning CS8618: Non-nullable property 'ProductName' must contain a non-null value when exiting constructor. Consider a...
+
+== Tests ==
+Binary score: FOUT
+Total       : 6
+Passed      : 1
+Failed      : 5
+
+Details per test:
+- CodeAssessment.Tests.Template.CalculateTotalWithVatTests.NullList_ThrowsArgumentNullException → Failed
+  Message: Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.ArgumentNullException)
+- CodeAssessment.Tests.Template.CalculateTotalWithVatTests.NegativeOrZeroQuantity_ThrowsArgumentException → Failed
+  Message: Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.ArgumentException)
+- CodeAssessment.Tests.Template.CalculateTotalWithVatTests.NullOrderLine_IsIgnored → Failed
+  Message: System.NullReferenceException : Object reference not set to an instance of an object.
+- CodeAssessment.Tests.Template.CalculateTotalWithVatTests.MultipleLines_ComputesCorrectTotal → Failed
+  Message: Assert.Equal() Failure: Values differ
+Expected: 138.4240
+Actual:   138.42
+- CodeAssessment.Tests.Template.CalculateTotalWithVatTests.NegativeUnitPrice_ThrowsArgumentException → Failed
+  Message: Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.ArgumentException)
+- CodeAssessment.Tests.Template.CalculateTotalWithVatTests.EmptyList_ReturnsZero → Passed
+
+== dotnet test stdout ==
+  Determining projects to restore...
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\Tests\Tests.csproj : warning NU1603: Tests depends on Microsoft.NET.Test.Sdk (>= 17.10.1) but Microsoft.NET.Test.Sdk 17.10.1 was not found. Microsoft.NET.Test.Sdk 17.11.0 was resolved instead.
+  Restored C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\Tests\Tests.csproj (in 5.45 sec).
+  1 of 2 projects are up-to-date for restore.
+
+
+  Determining projects to restore...
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\Tests\Tests.csproj : warning NU1603: Tests depends on Microsoft.NET.Test.Sdk (>= 17.10.1) but Microsoft.NET.Test.Sdk 17.10.1 was not found. Microsoft.NET.Test.Sdk 17.11.0 was resolved instead.
+  All projects are up-to-date for restore.
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\Tests\Tests.csproj : warning NU1603: Tests depends on Microsoft.NET.Test.Sdk (>= 17.10.1) but Microsoft.NET.Test.Sdk 17.10.1 was not found. Microsoft.NET.Test.Sdk 17.11.0 was resolved instead.
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\AssesmentSolution\Solution.cs(10,23): warning CS8618: Non-nullable property 'ProductName' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable. [C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\AssesmentSolution\AssesmentSolution.csproj]
+  AssesmentSolution -> C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\AssesmentSolution\bin\Release\net10.0\AssesmentSolution.dll
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\Tests\Test.cs(84,43): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\Tests\Tests.csproj]
+  Tests -> C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\Tests\bin\Release\net10.0\Tests.dll
+
+Build succeeded.
+
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\Tests\Tests.csproj : warning NU1603: Tests depends on Microsoft.NET.Test.Sdk (>= 17.10.1) but Microsoft.NET.Test.Sdk 17.10.1 was not found. Microsoft.NET.Test.Sdk 17.11.0 was resolved instead.
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\Tests\Tests.csproj : warning NU1603: Tests depends on Microsoft.NET.Test.Sdk (>= 17.10.1) but Microsoft.NET.Test.Sdk 17.10.1 was not found. Microsoft.NET.Test.Sdk 17.11.0 was resolved instead.
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\AssesmentSolution\Solution.cs(10,23): warning CS8618: Non-nullable property 'ProductName' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable. [C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\AssesmentSolution\AssesmentSolution.csproj]
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\Tests\Test.cs(84,43): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\Tests\Tests.csproj]
+    4 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:07.26
+
+
+  Determining projects to restore...
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\Tests\Tests.csproj : warning NU1603: Tests depends on Microsoft.NET.Test.Sdk (>= 17.10.1) but Microsoft.NET.Test.Sdk 17.10.1 was not found. Microsoft.NET.Test.Sdk 17.11.0 was resolved instead.
+  All projects are up-to-date for restore.
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\Tests\Tests.csproj : warning NU1603: Tests depends on Microsoft.NET.Test.Sdk (>= 17.10.1) but Microsoft.NET.Test.Sdk 17.10.1 was not found. Microsoft.NET.Test.Sdk 17.11.0 was resolved instead.
+  AssesmentSolution -> C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\AssesmentSolution\bin\Release\net10.0\AssesmentSolution.dll
+  Tests -> C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\Tests\bin\Release\net10.0\Tests.dll
+Test run for C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\Tests\bin\Release\net10.0\Tests.dll (.NETCoreApp,Version=v10.0)
+VSTest version 18.0.1 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+  Failed CodeAssessment.Tests.Template.CalculateTotalWithVatTests.NullOrderLine_IsIgnored [2 ms]
+  Error Message:
+   System.NullReferenceException : Object reference not set to an instance of an object.
+  Stack Trace:
+     at Assessment.Junior.Program.CalculateTotalWithVat(List`1 lines) in C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\AssesmentSolution\Solution.cs:line 30
+   at CodeAssessment.Tests.Template.CalculateTotalWithVatTests.NullOrderLine_IsIgnored() in C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\Tests\Test.cs:line 92
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed CodeAssessment.Tests.Template.CalculateTotalWithVatTests.NegativeUnitPrice_ThrowsArgumentException [2 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.ArgumentException)
+  Stack Trace:
+     at CodeAssessment.Tests.Template.CalculateTotalWithVatTests.NegativeUnitPrice_ThrowsArgumentException() in C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\Tests\Test.cs:line 73
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed CodeAssessment.Tests.Template.CalculateTotalWithVatTests.NullList_ThrowsArgumentNullException [< 1 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.ArgumentNullException)
+  Stack Trace:
+     at CodeAssessment.Tests.Template.CalculateTotalWithVatTests.NullList_ThrowsArgumentNullException() in C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\Tests\Test.cs:line 43
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed CodeAssessment.Tests.Template.CalculateTotalWithVatTests.MultipleLines_ComputesCorrectTotal [2 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 138.4240
+Actual:   138.42
+  Stack Trace:
+     at CodeAssessment.Tests.Template.CalculateTotalWithVatTests.MultipleLines_ComputesCorrectTotal() in C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\Tests\Test.cs:line 117
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed CodeAssessment.Tests.Template.CalculateTotalWithVatTests.NegativeOrZeroQuantity_ThrowsArgumentException [< 1 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.ArgumentException)
+  Stack Trace:
+     at CodeAssessment.Tests.Template.CalculateTotalWithVatTests.NegativeOrZeroQuantity_ThrowsArgumentException() in C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\Tests\Test.cs:line 57
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+Results File: C:\Users\BartvandenHoven\AppData\Local\Temp\run-21369d6605574c5b9408fe798f3837b1\Tests\TestResults\results.trx
+
+Failed!  - Failed:     5, Passed:     1, Skipped:     0, Total:     6, Duration: 535 ms - Tests.dll (net10.0)
+
+
+== dotnet test stderr ==
+
+
+
+
+[xUnit.net 00:00:02.33]     CodeAssessment.Tests.Template.CalculateTotalWithVatTests.NullOrderLine_IsIgnored [FAIL]
+[xUnit.net 00:00:02.34]     CodeAssessment.Tests.Template.CalculateTotalWithVatTests.NegativeUnitPrice_ThrowsArgumentException [FAIL]
+[xUnit.net 00:00:02.34]     CodeAssessment.Tests.Template.CalculateTotalWithVatTests.NullList_ThrowsArgumentNullException [FAIL]
+[xUnit.net 00:00:02.34]     CodeAssessment.Tests.Template.CalculateTotalWithVatTests.MultipleLines_ComputesCorrectTotal [FAIL]
+[xUnit.net 00:00:02.34]     CodeAssessment.Tests.Template.CalculateTotalWithVatTests.NegativeOrZeroQuantity_ThrowsArgumentException [FAIL]
+
+
+== Ingezonden code ==
+
+using System;
+using System.Collections.Generic;
+
+namespace Assessment.Junior
+{
+    public class OrderLine
+    {
+        // geen default waarde
+        public string ProductName { get; set; }
+        public int Quantity { get; set; }
+        public decimal UnitPrice { get; set; }
+    }
+
+    public class Program
+    {
+        // magic number, geen const naam, geen comment
+        public static decimal CalculateTotalWithVat(List<OrderLine> lines)
+        {
+            // geen null-check, geen ArgumentException, gewoon "doe maar wat"
+            double totaal = 0; // verkeerd type voor geld
+
+            if (lines != null)
+            {
+                for (int i = 0; i < lines.Count; i++)
+                {
+                    var l = lines[i];
+
+                    // geen check op Quantity <= 0, geen check op negatieve prijzen
+                    totaal = totaal + (double)l.UnitPrice * l.Quantity;
+                }
+            }
+
+            // 21% btw "erbij", maar met double berekend en pas op het eind gecast
+            totaal = totaal * 1.21;
+
+            // random afronden op 2 decimalen via Math.Round i.c.m. double → nog meer precisie-ellende
+            return (decimal)Math.Round(totaal, 2);
+        }
+
+        static void Main()
+        {
+            var lines = new List<OrderLine>();
+            var ol1 = new OrderLine();
+            ol1.ProductName = "C# in Depth";
+            ol1.Quantity = 2;
+            ol1.UnitPrice = 39.95m;
+            lines.Add(ol1);
+
+            var ol2 = new OrderLine();
+            ol2.ProductName = "Clean Code";
+            ol2.Quantity = 1;
+            ol2.UnitPrice = 34.50m;
+            lines.Add(ol2);
+
+            var total = CalculateTotalWithVat(lines);
+
+            Console.WriteLine("Totaal incl. btw: " + total); // geen format string, geen cultuur, etc.
+        }
+    }
+}
+

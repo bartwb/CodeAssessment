@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Ys/FIZ2ZOS8=",
+  "dgSpecHash": "+6jEcF8uaxs=",
   "success": true,
   "projectFilePath": "C:\\Users\\BartvandenHoven\\OneDrive - Magnus Energy\\Documenten\\School\\S8 temp\\Sprint 4\\ProtoTypeAzure\\CodeAssessment\\CodeAssessment.Ai\\CodeAssessment.Ai.csproj",
   "expectedPackageFiles": [
@@ -8,7 +8,11 @@
     "C:\\Users\\BartvandenHoven\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.3\\microsoft.extensions.logging.abstractions.8.0.3.nupkg.sha512",
     "C:\\Users\\BartvandenHoven\\.nuget\\packages\\openai\\2.7.0\\openai.2.7.0.nupkg.sha512",
     "C:\\Users\\BartvandenHoven\\.nuget\\packages\\system.clientmodel\\1.8.1\\system.clientmodel.1.8.1.nupkg.sha512",
-    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\system.memory.data\\8.0.1\\system.memory.data.8.0.1.nupkg.sha512"
+    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\system.memory.data\\8.0.1\\system.memory.data.8.0.1.nupkg.sha512",
+    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\system.net.serversentevents\\9.0.9\\system.net.serversentevents.9.0.9.nupkg.sha512",
+    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.22\\microsoft.netcore.app.ref.8.0.22.nupkg.sha512",
+    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.22\\microsoft.windowsdesktop.app.ref.8.0.22.nupkg.sha512",
+    "C:\\Users\\BartvandenHoven\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.22\\microsoft.aspnetcore.app.ref.8.0.22.nupkg.sha512"
   ],
   "logs": []
 }

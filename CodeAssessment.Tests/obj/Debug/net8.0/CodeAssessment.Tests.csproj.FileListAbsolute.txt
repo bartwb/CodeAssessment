@@ -1,0 +1,16 @@
+C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Tests\bin\Debug\net8.0\CodeAssessment.Tests.deps.json
+C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Tests\bin\Debug\net8.0\CodeAssessment.Tests.dll
+C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Tests\bin\Debug\net8.0\CodeAssessment.Tests.pdb
+C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Tests\bin\Debug\net8.0\CodeAssessment.Shared.dll
+C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Tests\bin\Debug\net8.0\CodeAssessment.Shared.pdb
+C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Tests\obj\Debug\net8.0\CodeAssessment.Tests.csproj.AssemblyReference.cache
+C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Tests\obj\Debug\net8.0\CodeAssessment.Tests.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Tests\obj\Debug\net8.0\CodeAssessment.Tests.AssemblyInfoInputs.cache
+C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Tests\obj\Debug\net8.0\CodeAssessment.Tests.AssemblyInfo.cs
+C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Tests\obj\Debug\net8.0\CodeAssessment.Tests.csproj.CoreCompileInputs.cache
+C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Tests\obj\Debug\net8.0\CodeAssessment.Tests.sourcelink.json
+C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Tests\obj\Debug\net8.0\CodeAsse.3BA95677.Up2Date
+C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Tests\obj\Debug\net8.0\CodeAssessment.Tests.dll
+C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Tests\obj\Debug\net8.0\refint\CodeAssessment.Tests.dll
+C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Tests\obj\Debug\net8.0\CodeAssessment.Tests.pdb
+C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Tests\obj\Debug\net8.0\ref\CodeAssessment.Tests.dll

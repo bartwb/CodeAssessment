@@ -30,5 +30,5 @@ COPY --from=build /app/publish ./
 # Zorg dat /tmp bestaat en schrijfbaar is (jij gebruikt Path.GetTempPath())
 RUN mkdir -p /tmp && chmod 1777 /tmp
 
-EXPOSE 6000
-ENTRYPOINT ["dotnet", "webapi.dll"]
+# Start API
+ENTRYPOINT ["dotnet", "CodeAssessment.Api.dll"]

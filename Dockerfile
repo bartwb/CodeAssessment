@@ -74,4 +74,4 @@ ENV PATH="$PATH:/root/.dotnet/tools"
 RUN mkdir -p /tmp && chmod 1777 /tmp
 
 EXPOSE 6000
-ENTRYPOINT ["dotnet", "webapi.dll"]
+ENTRYPOINT ["dotnet", "CodeAssessment.Api.dll"]

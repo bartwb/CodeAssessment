@@ -6,6 +6,8 @@ using CodeAssessment.Ai;
 using CodeAssessment.Static;
 using CodeAssessment.Tests;
 
+Console.WriteLine("BOOT: entering Program.cs");
+
 var builder = WebApplication.CreateBuilder(args);
 
 // CORS zodat je straks vanuit je frontend kunt praten

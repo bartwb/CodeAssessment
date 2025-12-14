@@ -1,0 +1,37 @@
+name: Docker container startup test
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          docker build -t test-runner .
+
+      - name: Run container
+        run: |
+          docker run -d -p 6000:6000 --name runner test-runner
+          sleep 10
+
+      - name: Test health endpoint
+        run: |
+          curl --fail http://localhost:6000/healthstatus
+
+      - name: Show container logs (always)
+        if: always()
+        run: |
+          docker logs runner
+
+      - name: Cleanup
+        if: always()
+        run: |
+          docker rm -f runner

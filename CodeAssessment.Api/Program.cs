@@ -88,7 +88,7 @@ app.MapPost("/runner", async (
         var action = req.Action.Trim().ToLowerInvariant();
 
         // Build internal request (log both IN and OUT lengths to catch mapping issues)
-        var codeReq = new CodeRequest(req.Code, req.LanguageVersion)
+        var codeReq = new CodeRequest(action, req.Code, req.LanguageVersion)
         {
             CandidateId = req.CandidateId,
             CandidateName = req.CandidateName,

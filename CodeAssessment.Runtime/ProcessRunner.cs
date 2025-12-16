@@ -48,6 +48,10 @@ public static class ProcessRunner
         p.EnableRaisingEvents = true;
         p.Exited += (_, _) => tcs.TrySetResult(true);
 
+        Console.WriteLine(
+            $"PROC START file='{fileName}' args='{arguments}' wd='{workingDirectory}' timeoutMs={timeoutMs}"
+        );
+
         p.Start();
         p.BeginOutputReadLine();
         p.BeginErrorReadLine();
@@ -62,6 +66,22 @@ public static class ProcessRunner
         }
 
         await tcs.Task; // zorg dat alles klaar is
+
+        static int Len(string? s) => string.IsNullOrEmpty(s) ? 0 : s.Length;
+        static string Clip(string? s, int max = 400) =>
+            string.IsNullOrEmpty(s) ? "" : (s.Length <= max ? s : s[..max] + "...");
+
+        Console.WriteLine(
+            $"PROC END   file='{fileName}' args='{arguments}' wd='{workingDirectory}' " +
+            $"exitCode={p.ExitCode} outLen={Len(so.ToString())} errLen={Len(se.ToString())}"
+        );
+
+        if (p.ExitCode != 0)
+        {
+            Console.WriteLine($"PROC OUT  snippet='{Clip(so.ToString())}'");
+            Console.WriteLine($"PROC ERR  snippet='{Clip(se.ToString())}'");
+        }
+
 
         return new ProcessResult(
             ExitCode: p.ExitCode,

@@ -64,6 +64,12 @@ public class RuntimeService : IRuntimeService
             // 2) vervang Program.cs door de code van de kandidaat
             Console.WriteLine($"COMPILE STEP step=write_program_start path='{projDir}'");
             var programPath = Path.Combine(projDir, "Program.cs");
+            Console.WriteLine(
+                $"COMPILE DEBUG writing Program.cs path='{programPath}' exists={File.Exists(programPath)}"
+            );
+            Console.WriteLine(
+                $"COMPILE DEBUG Program.cs content snippet:\n{Clip(req.Code, 300)}"
+            );
             await File.WriteAllTextAsync(programPath, req.Code);
             Console.WriteLine($"COMPILE STEP step=write_program_done elapsedMs={sw.ElapsedMilliseconds}");
 
@@ -75,6 +81,13 @@ public class RuntimeService : IRuntimeService
                 projDir,
                 120_000
             );
+
+            Console.WriteLine("COMPILE DEBFUG project files:");
+            foreach (var f in Directory.GetFiles(work, "*.csproj", SearchOption.AllDirectories))
+                Console.WriteLine("  csproj: " + f);
+
+            foreach (var f in Directory.GetFiles(work, "Program.cs", SearchOption.AllDirectories))
+                Console.WriteLine("  program: " + f);
 
             Console.WriteLine(
                 $"COMPILE STEP step=restore_done " +
@@ -100,6 +113,7 @@ public class RuntimeService : IRuntimeService
 
             // 4) build (geen run)
             Console.WriteLine("COMPILE STEP step=build_start");
+            Console.WriteLine($"COMPILE DEBUG build workingDir='{projDir}'");
             var build = await ProcessRunner.RunAsync(
                 "dotnet",
                 "build --configuration Release",

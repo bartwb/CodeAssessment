@@ -7,75 +7,142 @@ namespace CodeAssessment.Runtime;
 public class RuntimeService : IRuntimeService
 {
     public async Task<CompileResponse> CompileOnlyAsync(CodeRequest req)
+{
+    var sw = Stopwatch.StartNew();
+
+    // Correlatie uit runner (aanrader: zet deze op CodeRequest in /runner)
+    var corr = (req as dynamic)?.CorrelationId as string ?? "";
+    var identifier = (req as dynamic)?.Identifier as string ?? "";
+
+    static int Len(string? s) => string.IsNullOrEmpty(s) ? 0 : s.Length;
+    static string Clip(string? s, int max = 200) =>
+        string.IsNullOrEmpty(s) ? "" : (s.Length <= max ? s : s[..max] + "...");
+
+    // tijdelijke werkmap
+    var work = Path.Combine(Path.GetTempPath(), $"compile-{Guid.NewGuid():N}");
+    Directory.CreateDirectory(work);
+
+    string stdOut = "";
+    string stdErr = "";
+    int exitCode = -1;
+
+    Console.WriteLine(
+        $"COMPILE IN  corr={corr} id={identifier} " +
+        $"codeLen={Len(req?.Code)} lang='{req?.LanguageVersion}' work='{work}'"
+    );
+
+    try
     {
-        // tijdelijke werkmap
-        var work = Path.Combine(Path.GetTempPath(), $"compile-{Guid.NewGuid():N}");
-        Directory.CreateDirectory(work);
+        // 1) nieuw console-project
+        Console.WriteLine($"COMPILE STEP corr={corr} id={identifier} step=init_start");
+        var init = await ProcessRunner.RunAsync("dotnet", "new console -n UserApp", work, 60_000);
+        Console.WriteLine(
+            $"COMPILE STEP corr={corr} id={identifier} step=init_done " +
+            $"exitCode={init.ExitCode} outLen={Len(init.StdOut)} errLen={Len(init.StdErr)} elapsedMs={sw.ElapsedMilliseconds}"
+        );
 
-        string stdOut = "";
-        string stdErr = "";
-        int exitCode = -1;
-
-        try
+        if (init.ExitCode != 0)
         {
-            // 1) nieuw console-project
-            var init = await ProcessRunner.RunAsync("dotnet", "new console -n UserApp", work, 60_000);
-            if (init.ExitCode != 0)
-            {
-                return new CompileResponse(
-                    Success: false,
-                    StdOut: init.StdOut,
-                    StdErr: init.StdErr,
-                    ExitCode: init.ExitCode
-                );
-            }
-
-            var projDir = Path.Combine(work, "UserApp");
-
-            // 2) vervang Program.cs door de code van de kandidaat
-            var programPath = Path.Combine(projDir, "Program.cs");
-            await File.WriteAllTextAsync(programPath, req.Code);
-
-            // 3) restore
-            var restore = await ProcessRunner.RunAsync("dotnet", "restore", projDir, 120_000);
-            if (restore.ExitCode != 0)
-            {
-                return new CompileResponse(
-                    Success: false,
-                    StdOut: restore.StdOut,
-                    StdErr: restore.StdErr,
-                    ExitCode: restore.ExitCode
-                );
-            }
-
-            // 4) build (geen run)
-            var build = await ProcessRunner.RunAsync("dotnet", "build --configuration Release", projDir, 180_000);
-
-            stdOut = string.Join("\n\n", restore.StdOut, build.StdOut);
-            stdErr = string.Join("\n\n", restore.StdErr, build.StdErr);
-            exitCode = build.ExitCode;
-
-            var success = build.ExitCode == 0;
+            Console.WriteLine(
+                $"COMPILE BAD corr={corr} id={identifier} reason=init_failed " +
+                $"exitCode={init.ExitCode} err='{Clip(init.StdErr)}' elapsedMs={sw.ElapsedMilliseconds}"
+            );
 
             return new CompileResponse(
-                Success: success,
-                StdOut: stdOut,
-                StdErr: stdErr,
-                ExitCode: exitCode
+                Success: false,
+                StdOut: init.StdOut,
+                StdErr: init.StdErr,
+                ExitCode: init.ExitCode
             );
+        }
+
+        var projDir = Path.Combine(work, "UserApp");
+
+        // 2) vervang Program.cs door de code van de kandidaat
+        Console.WriteLine($"COMPILE STEP corr={corr} id={identifier} step=write_program_start path='{projDir}'");
+        var programPath = Path.Combine(projDir, "Program.cs");
+        await File.WriteAllTextAsync(programPath, req.Code);
+        Console.WriteLine($"COMPILE STEP corr={corr} id={identifier} step=write_program_done elapsedMs={sw.ElapsedMilliseconds}");
+
+        // 3) restore
+        Console.WriteLine($"COMPILE STEP corr={corr} id={identifier} step=restore_start");
+        var restore = await ProcessRunner.RunAsync("dotnet", "restore", projDir, 120_000);
+        Console.WriteLine(
+            $"COMPILE STEP corr={corr} id={identifier} step=restore_done " +
+            $"exitCode={restore.ExitCode} outLen={Len(restore.StdOut)} errLen={Len(restore.StdErr)} elapsedMs={sw.ElapsedMilliseconds}"
+        );
+
+        if (restore.ExitCode != 0)
+        {
+            Console.WriteLine(
+                $"COMPILE BAD corr={corr} id={identifier} reason=restore_failed " +
+                $"exitCode={restore.ExitCode} err='{Clip(restore.StdErr)}' elapsedMs={sw.ElapsedMilliseconds}"
+            );
+
+            return new CompileResponse(
+                Success: false,
+                StdOut: restore.StdOut,
+                StdErr: restore.StdErr,
+                ExitCode: restore.ExitCode
+            );
+        }
+
+        // 4) build (geen run)
+        Console.WriteLine($"COMPILE STEP corr={corr} id={identifier} step=build_start");
+        var build = await ProcessRunner.RunAsync("dotnet", "build --configuration Release", projDir, 180_000);
+        Console.WriteLine(
+            $"COMPILE STEP corr={corr} id={identifier} step=build_done " +
+            $"exitCode={build.ExitCode} outLen={Len(build.StdOut)} errLen={Len(build.StdErr)} elapsedMs={sw.ElapsedMilliseconds}"
+        );
+
+        stdOut = string.Join("\n\n", restore.StdOut, build.StdOut);
+        stdErr = string.Join("\n\n", restore.StdErr, build.StdErr);
+        exitCode = build.ExitCode;
+
+        var success = build.ExitCode == 0;
+
+        sw.Stop();
+        Console.WriteLine(
+            $"COMPILE OK  corr={corr} id={identifier} success={success} exitCode={exitCode} " +
+            $"outLen={Len(stdOut)} errLen={Len(stdErr)} elapsedMs={sw.ElapsedMilliseconds}"
+        );
+
+        return new CompileResponse(
+            Success: success,
+            StdOut: stdOut,
+            StdErr: stdErr,
+            ExitCode: exitCode
+        );
+    }
+    catch (Exception ex)
+    {
+        sw.Stop();
+
+        // full exception (stacktrace) in server logs
+        Console.WriteLine($"COMPILE ERR corr={corr} id={identifier} elapsedMs={sw.ElapsedMilliseconds}\n{ex}");
+
+        return new CompileResponse(
+            Success: false,
+            StdOut: stdOut,
+            StdErr: stdErr + "\n" + ex.Message,
+            ExitCode: exitCode
+        );
+    }
+    finally
+    {
+        Console.WriteLine($"COMPILE STEP corr={corr} id={identifier} step=cleanup_start");
+        try
+        {
+            Directory.Delete(work, true);
+            Console.WriteLine($"COMPILE STEP corr={corr} id={identifier} step=cleanup_done elapsedMs={sw.ElapsedMilliseconds}");
         }
         catch (Exception ex)
         {
-            return new CompileResponse(
-                Success: false,
-                StdOut: stdOut,
-                StdErr: stdErr + "\n" + ex.Message,
-                ExitCode: exitCode
+            Console.WriteLine(
+                $"COMPILE WARN corr={corr} id={identifier} step=cleanup_failed err='{Clip(ex.Message)}' elapsedMs={sw.ElapsedMilliseconds}"
             );
         }
-        finally
-        {
-            try { Directory.Delete(work, true); } catch { }
-        }
     }
+}
+
 }

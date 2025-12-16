@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using CodeAssessment.Shared;
 using CodeAssessment.Api;
 using CodeAssessment.Runtime;
@@ -38,35 +39,123 @@ app.MapGet("/healthstatus", () => Results.Ok(new { status = "ok" }));
 
 // ========== 2) ACA Runner ==========
 app.MapPost("/runner", async (
+    HttpContext http,
     [FromBody] CodeRequest req,
     IRuntimeService runtime,
     IRuntimeExecutionService exec,
     IAssessmentOrchestrator orchestrator) =>
 {
-    if (string.IsNullOrWhiteSpace(req.Action))
-        return Results.BadRequest(new { error = "action ontbreekt" });
+    var sw = Stopwatch.StartNew();
 
-    if (string.IsNullOrWhiteSpace(req.Code))
-        return Results.BadRequest(new { error = "code ontbreekt" });
+    // Dynamic Sessions identifier (belangrijk voor correlatie)
+    var identifier = http.Request.Query["identifier"].ToString();
 
-    var codeReq = new CodeRequest(req.Code, req.LanguageVersion)
+    // Correlation id (meest nuttig in logs)
+    var corr = Guid.NewGuid().ToString("N")[..12];
+
+    // Kleine helpers voor “niet te veel” log noise
+    static int Len(string? s) => string.IsNullOrEmpty(s) ? 0 : s.Length;
+    static string Clip(string? s, int max = 200) =>
+        string.IsNullOrEmpty(s) ? "" : (s.Length <= max ? s : s[..max] + "...");
+
+    // Inbound log
+    Console.WriteLine(
+        $"RUNNER IN  corr={corr} id={identifier} method={http.Request.Method} path={http.Request.Path} " +
+        $"action='{req?.Action}' codeLen={Len(req?.Code)} lang='{req?.LanguageVersion}' " +
+        $"candId='{req?.CandidateId}' assignId='{req?.AssignmentId}' ua='{Clip(http.Request.Headers.UserAgent)}'"
+    );
+
+    try
     {
-        CandidateId = req.CandidateId,
-        CandidateName = req.CandidateName,
-        CandidateEmail = req.CandidateEmail,
-        AssignmentId = req.AssignmentId,
-        AssignmentName = req.AssignmentName
-    };
+        if (req is null)
+        {
+            Console.WriteLine($"RUNNER BAD corr={corr} id={identifier} reason=req_null elapsedMs={sw.ElapsedMilliseconds}");
+            return Results.BadRequest(new { error = "body ontbreekt", corr, identifier });
+        }
 
-    var action = req.Action.Trim().ToLowerInvariant();
+        if (string.IsNullOrWhiteSpace(req.Action))
+        {
+            Console.WriteLine($"RUNNER BAD corr={corr} id={identifier} reason=action_missing elapsedMs={sw.ElapsedMilliseconds}");
+            return Results.BadRequest(new { error = "action ontbreekt", corr, identifier });
+        }
 
-    return action switch
+        if (string.IsNullOrWhiteSpace(req.Code))
+        {
+            Console.WriteLine($"RUNNER BAD corr={corr} id={identifier} reason=code_missing elapsedMs={sw.ElapsedMilliseconds}");
+            return Results.BadRequest(new { error = "code ontbreekt", corr, identifier });
+        }
+
+        var action = req.Action.Trim().ToLowerInvariant();
+
+        // Build internal request (log both IN and OUT lengths to catch mapping issues)
+        var codeReq = new CodeRequest(req.Code, req.LanguageVersion)
+        {
+            CandidateId = req.CandidateId,
+            CandidateName = req.CandidateName,
+            CandidateEmail = req.CandidateEmail,
+            AssignmentId = req.AssignmentId,
+            AssignmentName = req.AssignmentName
+        };
+
+        Console.WriteLine(
+            $"RUNNER MAP corr={corr} id={identifier} action='{action}' " +
+            $"codeLenIn={Len(req.Code)} codeLenOut={Len(codeReq.Code)}"
+        );
+
+        object result;
+
+        // Per action timing + step logging
+        switch (action)
+        {
+            case "compile":
+                Console.WriteLine($"RUNNER STEP corr={corr} id={identifier} step=compile_start");
+                result = await runtime.CompileOnlyAsync(codeReq);
+                Console.WriteLine($"RUNNER STEP corr={corr} id={identifier} step=compile_done elapsedMs={sw.ElapsedMilliseconds}");
+                break;
+
+            case "run":
+                Console.WriteLine($"RUNNER STEP corr={corr} id={identifier} step=run_start");
+                result = await exec.RunAsync(codeReq);
+                Console.WriteLine($"RUNNER STEP corr={corr} id={identifier} step=run_done elapsedMs={sw.ElapsedMilliseconds}");
+                break;
+
+            case "analyse":
+                Console.WriteLine($"RUNNER STEP corr={corr} id={identifier} step=analyse_start");
+                result = await orchestrator.AnalyzeAsync(codeReq);
+                Console.WriteLine($"RUNNER STEP corr={corr} id={identifier} step=analyse_done elapsedMs={sw.ElapsedMilliseconds}");
+                break;
+
+            default:
+                Console.WriteLine($"RUNNER BAD corr={corr} id={identifier} reason=unknown_action action='{action}' elapsedMs={sw.ElapsedMilliseconds}");
+                return Results.BadRequest(new { error = $"onbekende action '{req.Action}' (verwacht: compile|run|analyse)", corr, identifier });
+        }
+
+        sw.Stop();
+        Console.WriteLine($"RUNNER OK  corr={corr} id={identifier} action='{action}' status=200 elapsedMs={sw.ElapsedMilliseconds}");
+
+        // Return result + correlate (handig in callers)
+        return Results.Ok(new { corr, identifier, action, result });
+    }
+    catch (Exception ex)
     {
-        "compile" => Results.Ok(await runtime.CompileOnlyAsync(codeReq)),
-        "run"     => Results.Ok(await exec.RunAsync(codeReq)),
-        "analyse" => Results.Ok(await orchestrator.AnalyzeAsync(codeReq)),
-        _         => Results.BadRequest(new { error = $"onbekende action '{req.Action}' (verwacht: compile|run|analyse)" })
-    };
+        sw.Stop();
+
+        // Log full exception (stacktrace)
+        Console.WriteLine($"RUNNER ERR corr={corr} id={identifier} elapsedMs={sw.ElapsedMilliseconds}\n{ex}");
+
+        // Return clean error JSON (zonder huge stacktrace naar client)
+        return Results.Problem(
+            title: "runner_failed",
+            detail: ex.Message,
+            statusCode: 500,
+            extensions: new Dictionary<string, object?>
+            {
+                ["corr"] = corr,
+                ["identifier"] = identifier,
+                ["elapsedMs"] = sw.ElapsedMilliseconds
+            }
+        );
+    }
 });
 
 var port = 6000;

@@ -16,7 +16,7 @@ public class RuntimeExecutionService : IRuntimeExecutionService
         try
         {
             // 1) nieuw console-project aanmaken
-            var init = await ProcessRunner.RunAsync("dotnet", "new console -n UserApp", work, 60_000);
+            var init = await ProcessRunner.RunAsync("dotnet", "new console -n UserApp", work, 300_000);
             if (init.ExitCode != 0)
             {
                 return new RunResponse(
@@ -34,7 +34,7 @@ public class RuntimeExecutionService : IRuntimeExecutionService
             await File.WriteAllTextAsync(programPath, req.Code);
 
             // 3) restore
-            var restore = await ProcessRunner.RunAsync("dotnet", "restore", projDir, 120_000);
+            var restore = await ProcessRunner.RunAsync("dotnet", "restore", projDir, 600_000);
             if (restore.ExitCode != 0)
             {
                 return new RunResponse(
@@ -46,7 +46,7 @@ public class RuntimeExecutionService : IRuntimeExecutionService
             }
 
             // 4) build (Release)
-            var build = await ProcessRunner.RunAsync("dotnet", "build --configuration Release", projDir, 180_000);
+            var build = await ProcessRunner.RunAsync("dotnet", "build --configuration Release", projDir, 460_000);
             if (build.ExitCode != 0)
             {
                 stdOut = string.Join("\n\n", restore.StdOut, build.StdOut);

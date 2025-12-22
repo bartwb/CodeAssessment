@@ -22,11 +22,9 @@ public class TestRunnerService : ITestRunnerService
 
         try
         {
-            string stdout = "", stderr = "";
-            int exit = 0;
-
             // 1) Kandidaten-classlib
             var libInit = await ProcessRunner.RunAsync("dotnet", "new classlib -o AssesmentSolution", work);
+            Console.WriteLine($"[TESTS] libInit exit={libInit.ExitCode}");
             if (libInit.ExitCode != 0)
             {
                 result.BinaryScore = "FOUT";
@@ -42,8 +40,8 @@ public class TestRunnerService : ITestRunnerService
             );
 
             // 2) Tests-template kopiëren vanuit Api-output
-            var baseDir = AppContext.BaseDirectory; // bin\Debug\net10.0 van Api
-            var srcTpl  = Path.Combine(baseDir, "templates", "Tests");
+            var baseDir  = AppContext.BaseDirectory; // bin\Debug\net10.0 van Api
+            var srcTpl   = Path.Combine(baseDir, "templates", "Tests");
             var dstTests = Path.Combine(work, "Tests");
 
             Console.WriteLine($"[TESTS] srcTpl = {srcTpl}");
@@ -72,8 +70,8 @@ public class TestRunnerService : ITestRunnerService
             var testsCsprojRel = Path.GetRelativePath(work, testsCsprojFull)
                                      .Replace('\\', '/'); // voor Windows
 
+            Console.WriteLine($"[TESTS] testsCsprojRel = {testsCsprojRel}");
             Console.WriteLine($"[TESTS] testsCsprojFull = {testsCsprojFull}");
-            Console.WriteLine($"[TESTS] testsCsprojRel  = {testsCsprojRel}");
 
             // 3) Project reference: Tests -> AssesmentSolution
             var addRef = await ProcessRunner.RunAsync(
@@ -82,6 +80,7 @@ public class TestRunnerService : ITestRunnerService
                 work
             );
 
+            Console.WriteLine($"[TESTS] addRef exit={addRef.ExitCode}");
             if (addRef.ExitCode != 0)
             {
                 result.BinaryScore = "FOUT";
@@ -98,6 +97,15 @@ public class TestRunnerService : ITestRunnerService
                 work,
                 120_000
             );
+            Console.WriteLine($"[TESTS] restore exit={rr.ExitCode}");
+            if (rr.ExitCode != 0)
+            {
+                result.BinaryScore = "FOUT";
+                result.RawStdOut   = rr.StdOut;
+                result.RawStdErr   = rr.StdErr;
+                result.ExitCode    = rr.ExitCode;
+                return result;
+            }
 
             var rb = await ProcessRunner.RunAsync(
                 "dotnet",
@@ -105,39 +113,50 @@ public class TestRunnerService : ITestRunnerService
                 work,
                 180_000
             );
+            Console.WriteLine($"[TESTS] build exit={rb.ExitCode}");
+            if (rb.ExitCode != 0)
+            {
+                result.BinaryScore = "FOUT";
+                result.RawStdOut   = rb.StdOut;
+                result.RawStdErr   = rb.StdErr;
+                result.ExitCode    = rb.ExitCode;
+                return result;
+            }
+
+            // Maak TRX output deterministisch
+            var resultsDir = Path.Combine(work, "_results");
+            Directory.CreateDirectory(resultsDir);
 
             var rt = await ProcessRunner.RunAsync(
                 "dotnet",
-                $"test \"{testsCsprojRel}\" --configuration Release --logger \"trx;LogFileName=results.trx\"",
+                $"test \"{testsCsprojRel}\" --configuration Release " +
+                $"--results-directory \"{resultsDir}\" " +
+                $"--logger \"trx;LogFileName=results.trx\" " +
+                $"--diag \"{Path.Combine(resultsDir, "vstest-diag.txt")}\"",
                 work,
                 240_000
             );
 
-            stdout = string.Join("\n\n", rr.StdOut, rb.StdOut, rt.StdOut);
-            stderr = string.Join("\n\n", rr.StdErr, rb.StdErr, rt.StdErr);
-            exit   = rt.ExitCode;
+            Console.WriteLine($"[TESTS] test exit={rt.ExitCode}");
+            if (!string.IsNullOrWhiteSpace(rt.StdErr))
+                Console.WriteLine($"[TESTS] test stderr:\n{rt.StdErr}");
+            if (!string.IsNullOrWhiteSpace(rt.StdOut))
+                Console.WriteLine($"[TESTS] test stdout:\n{rt.StdOut}");
 
-            result.RawStdOut = stdout;
-            result.RawStdErr = stderr;
-            result.ExitCode  = exit;
+            // Combineer output voor terugkoppeling
+            result.RawStdOut = string.Join("\n\n", rr.StdOut, rb.StdOut, rt.StdOut);
+            result.RawStdErr = string.Join("\n\n", rr.StdErr, rb.StdErr, rt.StdErr);
+            result.ExitCode  = rt.ExitCode;
 
-            // 5) TRX zoeken + parse
-            string? trx = null;
+            // 5) TRX zoeken + parse (nu op vaste plek)
+            var expectedTrx = Path.Combine(resultsDir, "results.trx");
+            Console.WriteLine($"[TESTS] expected trx = {expectedTrx} exists={File.Exists(expectedTrx)}");
 
-            var trDir = Path.Combine(work, "Tests", "TestResults");
-            if (Directory.Exists(trDir))
-            {
-                trx = Directory.GetFiles(trDir, "*.trx", SearchOption.AllDirectories)
-                               .OrderBy(File.GetLastWriteTimeUtc)
-                               .LastOrDefault();
-            }
-
-            if (trx is null)
-            {
-                trx = Directory.GetFiles(work, "*.trx", SearchOption.AllDirectories)
-                               .OrderBy(File.GetLastWriteTimeUtc)
-                               .LastOrDefault();
-            }
+            string? trx = File.Exists(expectedTrx)
+                ? expectedTrx
+                : Directory.GetFiles(resultsDir, "*.trx", SearchOption.AllDirectories)
+                           .OrderBy(File.GetLastWriteTimeUtc)
+                           .LastOrDefault();
 
             Console.WriteLine(trx is null
                 ? "[TESTS] Geen TRX-bestand gevonden."

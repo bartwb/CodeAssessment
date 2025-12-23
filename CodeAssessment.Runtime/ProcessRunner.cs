@@ -5,13 +5,9 @@ namespace CodeAssessment.Runtime;
 
 public static class ProcessRunner
 {
-    public sealed record ProcessResult(
-        int ExitCode,
-        string StdOut,
-        string StdErr
-    );
+    public sealed record ProcessResult(int ExitCode, string StdOut, string StdErr);
 
-    public static async Task<ProcessResult> RunAsync(
+    public static async Task<ProcessRunner.ProcessResult> RunAsync(
         string fileName,
         string arguments,
         string workingDirectory,
@@ -21,7 +17,7 @@ public static class ProcessRunner
         {
             WorkingDirectory = workingDirectory,
             RedirectStandardOutput = true,
-            RedirectStandardError  = true,
+            RedirectStandardError = true,
             UseShellExecute = false,
             CreateNoWindow = true
         };
@@ -35,31 +31,18 @@ public static class ProcessRunner
         psi.Environment["DOTNET_NOLOGO"] = "1";
         psi.Environment["NUGET_XMLDOC_MODE"] = "skip";
 
-        using var p = new Process { StartInfo = psi };
+        using var p = new Process { StartInfo = psi, EnableRaisingEvents = true };
 
         var so = new StringBuilder();
         var se = new StringBuilder();
 
-        var tcs = new TaskCompletionSource<bool>();
+        var exitedTcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        p.Exited += (_, _) => exitedTcs.TrySetResult(true);
 
-        p.OutputDataReceived += (_, e) =>
-        {
-            if (e.Data != null)
-                so.AppendLine(e.Data);
-        };
+        p.OutputDataReceived += (_, e) => { if (e.Data != null) so.AppendLine(e.Data); };
+        p.ErrorDataReceived  += (_, e) => { if (e.Data != null) se.AppendLine(e.Data); };
 
-        p.ErrorDataReceived += (_, e) =>
-        {
-            if (e.Data != null)
-                se.AppendLine(e.Data);
-        };
-
-        p.EnableRaisingEvents = true;
-        p.Exited += (_, _) => tcs.TrySetResult(true);
-
-        Console.WriteLine(
-            $"PROC START file='{fileName}' args='{arguments}' wd='{workingDirectory}' timeoutMs={timeoutMs}"
-        );
+        Console.WriteLine($"PROC START file='{fileName}' args='{arguments}' wd='{workingDirectory}' timeoutMs={timeoutMs}");
 
         p.Start();
         p.BeginOutputReadLine();
@@ -67,36 +50,19 @@ public static class ProcessRunner
 
         using var cts = new CancellationTokenSource(timeoutMs);
 
-        var completedTask = await Task.WhenAny(tcs.Task, Task.Delay(Timeout.Infinite, cts.Token));
-        if (completedTask != tcs.Task)
+        var completed = await Task.WhenAny(exitedTcs.Task, Task.Delay(Timeout.Infinite, cts.Token));
+        if (completed != exitedTcs.Task)
         {
+            Console.WriteLine($"PROC TIMEOUT file='{fileName}' args='{arguments}' wd='{workingDirectory}' afterMs={timeoutMs}");
             try { p.Kill(entireProcessTree: true); } catch { }
             throw new TimeoutException($"Process '{fileName} {arguments}' timed out after {timeoutMs} ms.");
         }
 
-        await tcs.Task; // zorg dat alles klaar is
+        await exitedTcs.Task;
         p.WaitForExit();
 
-        static int Len(string? s) => string.IsNullOrEmpty(s) ? 0 : s.Length;
-        static string Clip(string? s, int max = 400) =>
-            string.IsNullOrEmpty(s) ? "" : (s.Length <= max ? s : s[..max] + "...");
+        Console.WriteLine($"PROC END file='{fileName}' args='{arguments}' wd='{workingDirectory}' exitCode={p.ExitCode} outLen={so.Length} errLen={se.Length}");
 
-        Console.WriteLine(
-            $"PROC END   file='{fileName}' args='{arguments}' wd='{workingDirectory}' " +
-            $"exitCode={p.ExitCode} outLen={Len(so.ToString())} errLen={Len(se.ToString())}"
-        );
-
-        if (p.ExitCode != 0)
-        {
-            Console.WriteLine($"PROC OUT  snippet='{Clip(so.ToString())}'");
-            Console.WriteLine($"PROC ERR  snippet='{Clip(se.ToString())}'");
-        }
-
-
-        return new ProcessResult(
-            ExitCode: p.ExitCode,
-            StdOut: so.ToString(),
-            StdErr: se.ToString()
-        );
+        return new ProcessRunner.ProcessResult(p.ExitCode, so.ToString(), se.ToString());
     }
 }

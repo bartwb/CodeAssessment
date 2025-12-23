@@ -7,7 +7,7 @@ public interface IRuntimeService
 
 public interface IRuntimeExecutionService
 {
-    Task<RunResponse> RunAsync(CodeRequest req);
+    Task<CodeAssessment.Shared.RunResponse> RunAsync(CodeAssessment.Shared.CodeRequest req);
 }
 
 public interface IAiReviewService

@@ -163,5 +163,3 @@ C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Spri
 C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\obj\Debug\net8.0\CodeAssessment.Api.pdb
 C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\obj\Debug\net8.0\CodeAssessment.Api.genruntimeconfig.cache
 C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\obj\Debug\net8.0\ref\CodeAssessment.Api.dll
-C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\bin\Debug\net8.0\templates\UserApp\Program.cs
-C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\bin\Debug\net8.0\templates\UserApp\userApp.csproj

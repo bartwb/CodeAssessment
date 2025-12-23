@@ -28,5 +28,5 @@ jobs:
           context: .
           push: true
           tags: |
-            goudvisvis/code-assessment:0.3.6
+            goudvisvis/code-assessment:0.3.7
             goudvisvis/code-assessment:latest

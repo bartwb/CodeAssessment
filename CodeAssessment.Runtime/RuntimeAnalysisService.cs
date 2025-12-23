@@ -5,9 +5,9 @@ namespace CodeAssessment.Runtime;
 
 public class RuntimeAnalysisService : IRuntimeAnalysisService
 {
-    private const int InfoTimeoutMs    = 60_000;
-    private const int NugetTimeoutMs   = 60_000;
-    private const int InitTimeoutMs    = 120_000;
+    private const int InfoTimeoutMs    = 300_000;
+    private const int NugetTimeoutMs   = 300_000;
+    private const int InitTimeoutMs    = 300_000;
 
     private const int RestoreTimeoutMs = 900_000; // 15 min
     private const int BuildTimeoutMs   = 600_000; // 10 min

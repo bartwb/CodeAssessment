@@ -132,12 +132,6 @@ public class TestRunnerService : ITestRunnerService
                 return result;
             }
 
-            Log("ENV: dotnet --info");
-            await ProcessRunner.RunAsync("dotnet", "--info", work, 60_000);
-
-            Log("ENV: dotnet nuget list source");
-            await ProcessRunner.RunAsync("dotnet", "nuget list source", work, 60_000);
-
 
             // 4) Restore/build/test
             Log("STEP 4a: dotnet restore");

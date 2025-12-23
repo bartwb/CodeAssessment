@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CodeAssessment.Shared")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8b6ab4e5d1d52c492323bf3b2847a73bbc0143a4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e765432e9c61b766ca2a14d7b834d0c7c5e25649")]
 [assembly: System.Reflection.AssemblyProductAttribute("CodeAssessment.Shared")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CodeAssessment.Shared")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

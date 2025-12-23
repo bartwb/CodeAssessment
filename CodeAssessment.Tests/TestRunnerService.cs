@@ -132,13 +132,20 @@ public class TestRunnerService : ITestRunnerService
                 return result;
             }
 
+            Log("ENV: dotnet --info");
+            await ProcessRunner.RunAsync("dotnet", "--info", work, 60_000);
+
+            Log("ENV: dotnet nuget list source");
+            await ProcessRunner.RunAsync("dotnet", "nuget list source", work, 60_000);
+
+
             // 4) Restore/build/test
             Log("STEP 4a: dotnet restore");
             var rr = await ProcessRunner.RunAsync(
                 "dotnet",
-                $"restore \"{testsCsprojRel}\" --disable-parallel",
+                $"restore \"{testsCsprojRel}\" --disable-parallel --verbosity normal",
                 work,
-                240_000 // restore kan in containers trager zijn
+                900_000
             );
 
             Log($"restore exit={rr.ExitCode}");
@@ -179,6 +186,15 @@ public class TestRunnerService : ITestRunnerService
             var resultsDir = Path.Combine(work, "_results");
             Directory.CreateDirectory(resultsDir);
             Log($"resultsDir = {resultsDir}");
+
+            Log("STEP 4c-1: dotnet test --list-tests (discovery only)");
+            var list = await ProcessRunner.RunAsync(
+                "dotnet",
+                $"test \"{testsCsprojRel}\" -c Release --no-build --no-restore --list-tests --verbosity normal",
+                work,
+                360_000
+            );
+            Log($"list-tests exit={list.ExitCode}");
 
             Log("STEP 4c: dotnet test");
             Log("ENV: dotnet --info");

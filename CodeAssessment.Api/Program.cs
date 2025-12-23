@@ -162,6 +162,7 @@ var port = 6000;
 app.Urls.Clear();
 app.Urls.Add($"http://0.0.0.0:{port}");
 Console.WriteLine("Listening on: " + string.Join(", ", app.Urls));
+Console.WriteLine("Verison 5...");
 Console.WriteLine("ASPNETCORE_URLS=" + Environment.GetEnvironmentVariable("ASPNETCORE_URLS"));
 Console.WriteLine("PORT=" + Environment.GetEnvironmentVariable("PORT"));
 app.Run();

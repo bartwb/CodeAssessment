@@ -26,6 +26,15 @@ public static class ProcessRunner
             CreateNoWindow = true
         };
 
+        psi.Environment["HOME"] = "/tmp";
+        psi.Environment["DOTNET_CLI_HOME"] = "/tmp/dotnet";
+        psi.Environment["NUGET_PACKAGES"] = "/tmp/nuget";
+        psi.Environment["TMPDIR"] = "/tmp";
+        psi.Environment["DOTNET_SKIP_FIRST_TIME_EXPERIENCE"] = "1";
+        psi.Environment["DOTNET_CLI_TELEMETRY_OPTOUT"] = "1";
+        psi.Environment["DOTNET_NOLOGO"] = "1";
+        psi.Environment["NUGET_XMLDOC_MODE"] = "skip";
+
         using var p = new Process { StartInfo = psi };
 
         var so = new StringBuilder();
@@ -66,6 +75,7 @@ public static class ProcessRunner
         }
 
         await tcs.Task; // zorg dat alles klaar is
+        p.WaitForExit();
 
         static int Len(string? s) => string.IsNullOrEmpty(s) ? 0 : s.Length;
         static string Clip(string? s, int max = 400) =>

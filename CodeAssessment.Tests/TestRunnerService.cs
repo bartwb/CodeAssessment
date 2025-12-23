@@ -136,7 +136,7 @@ public class TestRunnerService : ITestRunnerService
             Log("STEP 4a: dotnet restore");
             var rr = await ProcessRunner.RunAsync(
                 "dotnet",
-                $"restore \"{testsCsprojRel}\"",
+                $"restore \"{testsCsprojRel}\" --disable-parallel",
                 work,
                 240_000 // restore kan in containers trager zijn
             );
@@ -157,7 +157,7 @@ public class TestRunnerService : ITestRunnerService
             Log("STEP 4b: dotnet build");
             var rb = await ProcessRunner.RunAsync(
                 "dotnet",
-                $"build \"{testsCsprojRel}\" --configuration Release",
+                $"build \"{testsCsprojRel}\" -c Release -m:1",
                 work,
                 240_000
             );
@@ -181,12 +181,14 @@ public class TestRunnerService : ITestRunnerService
             Log($"resultsDir = {resultsDir}");
 
             Log("STEP 4c: dotnet test");
+            Log("ENV: dotnet --info");
             var rt = await ProcessRunner.RunAsync(
                 "dotnet",
-                $"test \"{testsCsprojRel}\" --configuration Release " +
+                $"test \"{testsCsprojRel}\" --configuration Release --no-build --no-restore " +
                 $"--results-directory \"{resultsDir}\" " +
                 $"--logger \"trx;LogFileName=results.trx\" " +
-                $"--diag \"{Path.Combine(resultsDir, "vstest-diag.txt")}\"",
+                $"--diag \"{Path.Combine(resultsDir, "vstest-diag.txt")}\" " +
+                $"--blame --blame-hang --blame-hang-timeout 5m",
                 work,
                 360_000
             );

@@ -32,9 +32,9 @@ public class RuntimeService : IRuntimeService
             Console.WriteLine("COMPILE STEP step=init_start");
             var init = await ProcessRunner.RunAsync(
                 "dotnet",
-                "new console -n UserApp",
+                "new console -n UserApp --no-restore --nologo",
                 work,
-                60_000
+                300_000
             );
 
             Console.WriteLine(

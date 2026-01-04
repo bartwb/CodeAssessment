@@ -86,6 +86,30 @@ public class RuntimeService : IRuntimeService
             }
 
             var projDir = Path.Combine(work, "UserApp");
+            var projFile = Path.Combine(projDir, "UserApp.csproj");
+
+            // Force TFM naar net8.0 zodat Tests/AssesmentSolution referentie compatibel is
+            try
+            {
+                if (File.Exists(projFile))
+                {
+                    var xml = await File.ReadAllTextAsync(projFile);
+                    if (xml.Contains("<TargetFramework>net10.0</TargetFramework>"))
+                    {
+                        xml = xml.Replace("<TargetFramework>net10.0</TargetFramework>", "<TargetFramework>net8.0</TargetFramework>");
+                        await File.WriteAllTextAsync(projFile, xml);
+                        Console.WriteLine($"COMPILE STEP updated TFM to net8.0 in '{projFile}'");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"COMPILE WARN csproj not found to update TFM: '{projFile}'");
+                }
+            }
+            catch (Exception exTfm)
+            {
+                Console.WriteLine($"COMPILE WARN failed to update TFM in '{projFile}': {Clip(exTfm.ToString(), 400)}");
+            }
 
             // 2) vervang Program.cs door de code van de kandidaat
             Console.WriteLine($"COMPILE STEP step=write_program_start path='{projDir}'");

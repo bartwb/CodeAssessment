@@ -1,0 +1,225 @@
+﻿===== CODE ASSESSMENT RAPPORT =====
+Datum/tijd (UTC): 2026-01-04 14:14:53
+
+== Kandidaat ==
+Id      : demo-123
+Naam    : -
+Email   : -
+
+== Opdracht ==
+AssignmentId  : csharp-junior-1
+AssignmentName: -
+
+== Samenvatting ==
+Einds score     : 8
+AI score        : 8
+Compileert      : JA
+Alle tests groen: NEE
+
+== AI review ==
+Score: 8 / 10
+
+Algemene feedback:
+The code is generally well-structured and follows good practices. It correctly calculates the total price including VAT for a list of order lines. However, there are a few areas for improvement, particularly in terms of input validation and exception handling.
+
+Issues:
+- Regels 15, Severity: Warning
+  Suggestie: Consider using a more descriptive exception message when throwing ArgumentNullException to provide more context about the error.
+- Regels 19, Severity: Info
+  Suggestie: Returning 0 for an empty list is correct, but consider logging this scenario for better traceability in larger applications.
+- Regels 25, Severity: Warning
+  Suggestie: Instead of continuing the loop when an OrderLine is null, consider logging a warning or throwing an exception, as this might indicate a data integrity issue.
+- Regels 27–31, Severity: Info
+  Suggestie: The exception messages for invalid Quantity and UnitPrice are clear, but consider logging these exceptions to a file or monitoring system for better error tracking.
+- Regels 43, Severity: Info
+  Suggestie: The Main method is simple and effective for demonstration purposes. In a production environment, consider separating the logic into different classes or methods to adhere to the Single Responsibility Principle.
+
+== Static analysis ==
+Analyzer: .NET Code Analysis (Roslyn + analyzers)
+Aantal diagnostics: 25
+
+- CA1510 [Warning] @ 19:13
+  Use 'ArgumentNullException.ThrowIfNull' instead of explicitly throwing a new exception instance
+- RCS1001 [Warning] @ 33:21
+  Add braces to if statement (when expression spans over multiple lines)
+- RCS1001 [Warning] @ 38:21
+  Add braces to if statement (when expression spans over multiple lines)
+- RCS1102 [Warning] @ 13:18
+  Make class static
+- RCS1124 [Warning] @ 45:13
+  Inline local variable
+- SA1200 [Warning] @ 1:1
+  Using directive should appear within a namespace declaration
+- SA1200 [Warning] @ 2:1
+  Using directive should appear within a namespace declaration
+- SA1400 [Warning] @ 49:21
+  Element 'Main' should declare an access modifier
+- SA1402 [Warning] @ 6:18
+  File may only contain a single type
+- SA1413 [Warning] @ 54:17
+  Use trailing comma in multi-line initializers
+- SA1503 [Warning] @ 20:17
+  Braces should not be omitted
+- SA1503 [Warning] @ 23:17
+  Braces should not be omitted
+- SA1503 [Warning] @ 30:21
+  Braces should not be omitted
+- SA1516 [Warning] @ 9:1
+  Elements should be separated by blank line
+- SA1516 [Warning] @ 10:1
+  Elements should be separated by blank line
+- SA1519 [Warning] @ 33:21
+  Braces should not be omitted from multi-line child statement
+- SA1519 [Warning] @ 38:21
+  Braces should not be omitted from multi-line child statement
+- SA1600 [Warning] @ 8:23
+  Elements should be documented
+- SA1600 [Warning] @ 10:24
+  Elements should be documented
+- SA1600 [Warning] @ 9:20
+  Elements should be documented
+- SA1600 [Warning] @ 6:18
+  Elements should be documented
+- SA1600 [Warning] @ 13:18
+  Elements should be documented
+- SA1600 [Warning] @ 17:31
+  Elements should be documented
+- SA1633 [Warning] @ 1:1
+  The file header is missing or not located at the top of the file.
+- SA1649 [Warning] @ 6:18
+  File name should match first type name
+
+== Runtime ==
+ExitCode         : 0
+RunDurationMs    : 237
+RunTotalCpuTimeMs: 62
+RunAverageCpuPct : 2.2
+RunPeakWorkingSet: 0 MB
+
+Fases:
+- env_dotnet_info
+  DurationMs    : 293
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- env_nuget_sources
+  DurationMs    : 359
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- init
+  DurationMs    : 405
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- restore
+  DurationMs    : 819
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- build
+  DurationMs    : 1007
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- publish
+  DurationMs    : 604
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- run
+  DurationMs    : 237
+  CpuTimeMs     : 62
+  PeakWorkingSet: 0 MB
+  Samples count : 1
+  Samples range : 231 ms → 231 ms
+
+StdOut (snippet):
+  Determining projects to restore...
+  Restored C:\Users\BartvandenHoven\AppData\Local\Temp\run-analyze-f40a80f56897490a950d9fe4c7fd2a59\UserApp\UserApp.csproj (in 55 ms).
+
+
+  UserApp -> C:\Users\BartvandenHoven\AppData\Local\Temp\run-analyze-f40a80f56897490a950d9fe4c7fd2a59\UserApp\bin\Release\net10.0\UserApp.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.74...
+
+== Tests ==
+Binary score: FOUT
+Total       : 0
+Passed      : 0
+Failed      : 0
+
+Geen individuele tests geregistreerd.
+
+== dotnet test stderr ==
+Project `C:\Users\BartvandenHoven\AppData\Local\Temp\run-e6caf9150be9407d89d3731c6e9fc984\AssesmentSolution\AssesmentSolution.csproj` cannot be added due to incompatible targeted frameworks between the two projects. Review the project you are trying to add and verify that is compatible with the following targets:
+    - net8.0
+
+
+== Ingezonden code ==
+using System;
+using System.Collections.Generic;
+
+namespace Assessment.Junior
+{
+    public class OrderLine
+    {
+        public string ProductName { get; set; } = string.Empty;
+        public int Quantity { get; set; }
+        public decimal UnitPrice { get; set; }
+    }
+
+    public class Program
+    {
+        private const decimal VatRate = 0.21m;
+
+        public static decimal CalculateTotalWithVat(List<OrderLine> lines)
+        {
+            if (lines == null)
+                throw new ArgumentNullException(nameof(lines));
+
+            if (lines.Count == 0)
+                return 0m;
+
+            decimal subtotal = 0m;
+
+            foreach (var line in lines)
+            {
+                if (line == null)
+                    continue;
+
+                if (line.Quantity <= 0)
+                    throw new ArgumentException(
+                        $"Quantity must be > 0 for product '{line.ProductName}'.",
+                        nameof(lines));
+
+                if (line.UnitPrice < 0)
+                    throw new ArgumentException(
+                        $"UnitPrice must be >= 0 for product '{line.ProductName}'.",
+                        nameof(lines));
+
+                subtotal += line.Quantity * line.UnitPrice;
+            }
+
+            decimal total = subtotal * (1m + VatRate);
+            return total;
+        }
+
+        static void Main()
+        {
+            var lines = new List<OrderLine>
+            {
+                new OrderLine { ProductName = "C# in Depth", Quantity = 2, UnitPrice = 39.95m },
+                new OrderLine { ProductName = "Clean Code", Quantity = 1, UnitPrice = 34.50m }
+            };
+
+            var total = CalculateTotalWithVat(lines);
+
+            Console.WriteLine($"Totaal incl. btw: {total:0.00} EUR");
+        }
+    }
+}

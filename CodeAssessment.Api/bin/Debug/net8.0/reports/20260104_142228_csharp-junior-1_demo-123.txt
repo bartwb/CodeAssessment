@@ -1,0 +1,315 @@
+﻿===== CODE ASSESSMENT RAPPORT =====
+Datum/tijd (UTC): 2026-01-04 14:22:28
+
+== Kandidaat ==
+Id      : demo-123
+Naam    : -
+Email   : -
+
+== Opdracht ==
+AssignmentId  : csharp-junior-1
+AssignmentName: -
+
+== Samenvatting ==
+Einds score     : 8
+AI score        : 8
+Compileert      : JA
+Alle tests groen: JA
+
+== AI review ==
+Score: 8 / 10
+
+Algemene feedback:
+The code is generally well-structured and follows good practices. It correctly calculates the total price including VAT for a list of order lines. The use of exceptions for input validation is appropriate, and the code is clean and readable. However, there are minor improvements that can be made in terms of performance and robustness.
+
+Issues:
+- Regels 20, Severity: Warning
+  Suggestie: Consider using a more efficient way to check for null in the list, such as using LINQ's Any() method to avoid iterating over the entire list if it's empty.
+- Regels 28, Severity: Info
+  Suggestie: Instead of throwing an exception for a null OrderLine, consider logging a warning or handling it in a way that informs the user without stopping execution.
+- Regels 36, Severity: Info
+  Suggestie: Consider using string interpolation for exception messages for better readability, e.g., $"Quantity must be > 0 for product '{line.ProductName}'."
+- Regels 44, Severity: Info
+  Suggestie: The calculation of the total could be simplified using LINQ to improve readability, e.g., lines.Where(line => line != null).Sum(line => line.Quantity * line.UnitPrice) * (1m + VatRate).
+
+== Static analysis ==
+Analyzer: .NET Code Analysis (Roslyn + analyzers)
+Aantal diagnostics: 25
+
+- CA1510 [Warning] @ 19:13
+  Use 'ArgumentNullException.ThrowIfNull' instead of explicitly throwing a new exception instance
+- RCS1001 [Warning] @ 33:21
+  Add braces to if statement (when expression spans over multiple lines)
+- RCS1001 [Warning] @ 38:21
+  Add braces to if statement (when expression spans over multiple lines)
+- RCS1102 [Warning] @ 13:18
+  Make class static
+- RCS1124 [Warning] @ 45:13
+  Inline local variable
+- SA1200 [Warning] @ 1:1
+  Using directive should appear within a namespace declaration
+- SA1200 [Warning] @ 2:1
+  Using directive should appear within a namespace declaration
+- SA1400 [Warning] @ 49:21
+  Element 'Main' should declare an access modifier
+- SA1402 [Warning] @ 6:18
+  File may only contain a single type
+- SA1413 [Warning] @ 54:17
+  Use trailing comma in multi-line initializers
+- SA1503 [Warning] @ 20:17
+  Braces should not be omitted
+- SA1503 [Warning] @ 23:17
+  Braces should not be omitted
+- SA1503 [Warning] @ 30:21
+  Braces should not be omitted
+- SA1516 [Warning] @ 9:1
+  Elements should be separated by blank line
+- SA1516 [Warning] @ 10:1
+  Elements should be separated by blank line
+- SA1519 [Warning] @ 33:21
+  Braces should not be omitted from multi-line child statement
+- SA1519 [Warning] @ 38:21
+  Braces should not be omitted from multi-line child statement
+- SA1600 [Warning] @ 8:23
+  Elements should be documented
+- SA1600 [Warning] @ 10:24
+  Elements should be documented
+- SA1600 [Warning] @ 9:20
+  Elements should be documented
+- SA1600 [Warning] @ 6:18
+  Elements should be documented
+- SA1600 [Warning] @ 13:18
+  Elements should be documented
+- SA1600 [Warning] @ 17:31
+  Elements should be documented
+- SA1633 [Warning] @ 1:1
+  The file header is missing or not located at the top of the file.
+- SA1649 [Warning] @ 6:18
+  File name should match first type name
+
+== Runtime ==
+ExitCode         : 0
+RunDurationMs    : 249
+RunTotalCpuTimeMs: 93
+RunAverageCpuPct : 3.1
+RunPeakWorkingSet: 0 MB
+
+Fases:
+- env_dotnet_info
+  DurationMs    : 277
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- env_nuget_sources
+  DurationMs    : 286
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- init
+  DurationMs    : 384
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- restore
+  DurationMs    : 849
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- build
+  DurationMs    : 951
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- publish
+  DurationMs    : 628
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- run
+  DurationMs    : 249
+  CpuTimeMs     : 93
+  PeakWorkingSet: 0 MB
+  Samples count : 1
+  Samples range : 245 ms → 245 ms
+
+StdOut (snippet):
+  Determining projects to restore...
+  Restored C:\Users\BartvandenHoven\AppData\Local\Temp\run-analyze-e561751149154d759ece72cb767aa240\UserApp\UserApp.csproj (in 133 ms).
+
+
+  UserApp -> C:\Users\BartvandenHoven\AppData\Local\Temp\run-analyze-e561751149154d759ece72cb767aa240\UserApp\bin\Release\net8.0\UserApp.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.71...
+
+== Tests ==
+Binary score: GOED
+Total       : 6
+Passed      : 6
+Failed      : 0
+
+Details per test:
+- CodeAssessment.Tests.Template.CalculateTotalWithVatTests.NullOrderLine_IsIgnored → Passed
+- CodeAssessment.Tests.Template.CalculateTotalWithVatTests.EmptyList_ReturnsZero → Passed
+- CodeAssessment.Tests.Template.CalculateTotalWithVatTests.MultipleLines_ComputesCorrectTotal → Passed
+- CodeAssessment.Tests.Template.CalculateTotalWithVatTests.NullList_ThrowsArgumentNullException → Passed
+- CodeAssessment.Tests.Template.CalculateTotalWithVatTests.NegativeOrZeroQuantity_ThrowsArgumentException → Passed
+- CodeAssessment.Tests.Template.CalculateTotalWithVatTests.NegativeUnitPrice_ThrowsArgumentException → Passed
+
+== dotnet test stdout ==
+Build started 1/4/2026 3:22:12 PM.
+     1>Project "C:\Users\BartvandenHoven\AppData\Local\Temp\run-2de9a39bf5fb49f6ab27bba65a9ea7cc\Tests\Tests.csproj" on node 1 (Restore target(s)).
+     1>_GetAllRestoreProjectPathItems:
+         Determining projects to restore...
+       Restore:
+         X.509 certificate chain validation will use the default trust store selected by .NET for code signing.
+         X.509 certificate chain validation will use the default trust store selected by .NET for timestamping.
+         Restoring packages for C:\Users\BartvandenHoven\AppData\Local\Temp\run-2de9a39bf5fb49f6ab27bba65a9ea7cc\Tests\Tests.csproj...
+           GET https://api.nuget.org/v3-flatcontainer/microsoft.net.test.sdk/index.json
+           OK https://api.nuget.org/v3-flatcontainer/microsoft.net.test.sdk/index.json 198ms
+           GET https://api.nuget.org/v3-flatcontainer/microsoft.net.test.sdk/17.11.1/microsoft.net.test.sdk.17.11.1.nupkg
+           OK https://api.nuget.org/v3-flatcontainer/microsoft.net.test.sdk/17.11.1/microsoft.net.test.sdk.17.11.1.nupkg 19ms
+           GET https://api.nuget.org/v3-flatcontainer/microsoft.testplatform.testhost/index.json
+           OK https://api.nuget.org/v3-flatcontainer/microsoft.testplatform.testhost/index.json 117ms
+           GET https://api.nuget.org/v3-flatcontainer/microsoft.codecoverage/index.json
+           OK https://api.nuget.org/v3-flatcontainer/microsoft.codecoverage/index.json 121ms
+           GET https://api.nuget.org/v3-flatcontainer/microsoft.testplatform.testhost/17.11.1/microsoft.testplatform.testhost.17.11.1.nupkg
+           OK https://api.nuget.org/v3-flatcontainer/microsoft.testplatform.testhost/17.11.1/microsoft.testplatform.testhost.17.11.1.nupkg 14ms
+           GET https://api.nuget.org/v3-flatcontainer/microsoft.codecoverage/17.11.1/microsoft.codecoverage.17.11.1.nupkg
+           OK https://api.nuget.org/v3-flatcontainer/microsoft.codecoverage/17.11.1/microsoft.codecoverage.17.11.1.nupkg 17ms
+           GET https://api.nuget.org/v3-flatcontainer/microsoft.testplatform.objectmodel/index.json
+           OK https://api.nuget.org/v3-flatcontainer/microsoft.testplatform.objectmodel/index.json 120ms
+           GET https://api.nuget.org/v3-flatcontainer/microsoft.testplatform.objectmodel/17.11.1/microsoft.testplatform.objectmodel.17.11.1.nupkg
+           OK https://api.nuget.org/v3-flatcontainer/microsoft.testplatform.objectmodel/17.11.1/microsoft.testplatform.objectmodel.17.11.1.nupkg 13ms
+           GET https://api.nuget.org/v3-flatcontainer/system.reflection.metadata/index.json
+           OK https://api.nuget.org/v3-flatcontainer/system.reflection.metadata/index.json 111ms
+           GET https://api.nuget.org/v3-flatcontainer/system.reflection.metadata/1.6.0/system.reflection.metadata.1.6.0.nupkg
+           OK https://api.nuget.org/v3-flatcontainer/system.reflection.metadata/1.6.0/system.reflection.metadata.1.6.0.nupkg 11ms
+         Installed Microsoft.TestPlatform.TestHost 17.11.1 from https://api.nuget.org/v3/index.json to C:\Users\BartvandenHoven\.nuget\packages\microsoft.testplatform.testhost\17.11.1 with content hash DnG+GOqJXO/CkoqlJWeDFTgPhqD/V6VqUIL3vINizCWZ3X+HshCtbbyDdSHQQEjrc2Sl/K3yaxX6s+5LFEdYuw==.
+         Installed Microsoft.CodeCoverage 17.11.1 from https://api.nuget.org/v3/index.json to C:\Users\BartvandenHoven\.nuget\packages\microsoft.codecoverage\17.11.1 with content hash nPJqrcA5iX+Y0kqoT3a+pD/8lrW/V7ayqnEJQsTonSoPz59J8bmoQhcSN4G8+UJ64Hkuf0zuxnfuj2lkHOq4cA==.
+         Installed System.Reflection.Metadata 1.6.0 from https://api.nuget.org/v3/index.json to C:\Users\BartvandenHoven\.nuget\packages\system.reflection.metadata\1.6.0 with content hash COC1aiAJjCoA5GBF+QKL2uLqEBew4JsCkQmoHKbN3TlOZKa2fKLz5CpiRQKDz0RsAOEGsVKqOD5bomsXq/4STQ==.
+         Installed Microsoft.NET.Test.Sdk 17.11.1 from https://api.nuget.org/v3/index.json to C:\Users\BartvandenHoven\.nuget\packages\microsoft.net.test.sdk\17.11.1 with content hash U3Ty4BaGoEu+T2bwSko9tWqWUOU16WzSFkq6U8zve75oRBMSLTBdMAZrVNNz1Tq12aCdDom9fcOcM9QZaFHqFg==.
+         Installed Microsoft.TestPlatform.ObjectModel 17.11.1 from https://api.nuget.org/v3/index.json to C:\Users\BartvandenHoven\.nuget\packages\microsoft.testplatform.objectmodel\17.11.1 with content hash E2jZqAU6JeWEVsyOEOrSW1o1bpHLgb25ypvKNB/moBXPVsFYBPd/Jwi7OrYahG50J83LfHzezYI+GaEkpAotiA==.
+           CACHE https://api.nuget.org/v3/vulnerabilities/index.json
+           CACHE https://api.nuget.org/v3-vulnerabilities/2026.01.03.11.41.01/vulnerability.base.json
+           CACHE https://api.nuget.org/v3-vulnerabilities/2026.01.03.11.41.01/2026.01.03.11.41.01/vulnerability.update.json
+         Generating MSBuild file C:\Users\BartvandenHoven\AppData\Local\Temp\run-2de9a39bf5fb49f6ab27bba65a9ea7cc\Tests\obj\Tests.csproj.nuget.g.props.
+         Generating MSBuild file C:\Users\BartvandenHoven\AppData\Local\Temp\run-2de9a39bf5fb49f6ab27bba65a9ea7cc\Tests\obj\Tests.csproj.nuget.g.targets.
+         Writing assets file to disk. Path: C:\Users\BartvandenHoven\AppData\Local\Temp\run-2de9a39bf5fb49f6ab27bba65a9ea7cc\Tests\obj\project.assets.json
+         Restored C:\Users\BartvandenHoven\AppData\Local\Temp\run-2de9a39bf5fb49f6ab27bba65a9ea7cc\Tests\Tests.csproj (in 4.47 sec).
+         Restoring packages for C:\Users\BartvandenHoven\AppData\Local\Temp\run-2de9a39bf5fb49f6ab27bba65a9ea7cc\AssesmentSolution\AssesmentSolution.csproj...
+         Generating MSBuild file C:\Users\BartvandenHoven\AppData\Local\Temp\run-2de9a39bf5fb49f6ab27bba65a9ea7cc\AssesmentSolution\obj\AssesmentSolution.csproj.nuget.g.props.
+         Generating MSBuild file C:\Users\BartvandenHoven\AppData\Local\Temp\run-2de9a39bf5fb49f6ab27bba65a9ea7cc\AssesmentSolution\obj\AssesmentSolution.csproj.nuget.g.targets.
+         Writing assets file to disk. Path: C:\Users\BartvandenHoven\AppData\Local\Temp\run-2de9a39bf5fb49f6ab27bba65a9ea7cc\AssesmentSolution\obj\project.assets.json
+         Restored C:\Users\BartvandenHoven\AppData\Local\Temp\run-2de9a39bf5fb49f6ab27bba65a9ea7cc\AssesmentSolution\AssesmentSolution.csproj (in 3 ms).
+         
+         NuGet Config files used:
+             C:\Users\BartvandenHoven\AppData\Roaming\NuGet\NuGet.Config
+         
+         Feeds used:
+             https://api.nuget.org/v3/index.json
+         
+         Installed:
+             5 package(s) to C:\Users\BartvandenHoven\AppData\Local\Temp\run-2de9a39bf5fb49f6ab27bba65a9ea7cc\Tests\Tests.csproj
+     1>Done Building Project "C:\Users\BartvandenHoven\AppData\Local\Temp\run-2de9a39bf5fb49f6ab27bba65a9ea7cc\Tests\Tests.csproj" (Restore target(s)).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:05.03
+
+
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  AssesmentSolution -> C:\Users\BartvandenHoven\AppData\Local\Temp\run-2de9a39bf5fb49f6ab27bba65a9ea7cc\AssesmentSolution\bin\Release\net8.0\AssesmentSolution.dll
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-2de9a39bf5fb49f6ab27bba65a9ea7cc\Tests\Test.cs(84,43): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [C:\Users\BartvandenHoven\AppData\Local\Temp\run-2de9a39bf5fb49f6ab27bba65a9ea7cc\Tests\Tests.csproj]
+  Tests -> C:\Users\BartvandenHoven\AppData\Local\Temp\run-2de9a39bf5fb49f6ab27bba65a9ea7cc\Tests\bin\Release\net8.0\Tests.dll
+
+Build succeeded.
+
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-2de9a39bf5fb49f6ab27bba65a9ea7cc\Tests\Test.cs(84,43): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [C:\Users\BartvandenHoven\AppData\Local\Temp\run-2de9a39bf5fb49f6ab27bba65a9ea7cc\Tests\Tests.csproj]
+    1 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:04.67
+
+
+Test run for C:\Users\BartvandenHoven\AppData\Local\Temp\run-2de9a39bf5fb49f6ab27bba65a9ea7cc\Tests\bin\Release\net8.0\Tests.dll (.NETCoreApp,Version=v8.0)
+VSTest version 18.0.1-release-25523-111 (x64)
+
+Starting test execution, please wait...
+Logging Vstest Diagnostics in file: C:\Users\BartvandenHoven\AppData\Local\Temp\run-2de9a39bf5fb49f6ab27bba65a9ea7cc\_results\vstest-diag.txt
+A total of 1 test files matched the specified pattern.
+Data collector 'Blame' message: All tests finished running, Sequence file will not be generated.
+Results File: C:\Users\BartvandenHoven\AppData\Local\Temp\run-2de9a39bf5fb49f6ab27bba65a9ea7cc\_results\results.trx
+
+Passed!  - Failed:     0, Passed:     6, Skipped:     0, Total:     6, Duration: 345 ms - Tests.dll (net8.0)
+
+
+== Ingezonden code ==
+using System;
+using System.Collections.Generic;
+
+namespace Assessment.Junior
+{
+    public class OrderLine
+    {
+        public string ProductName { get; set; } = string.Empty;
+        public int Quantity { get; set; }
+        public decimal UnitPrice { get; set; }
+    }
+
+    public class Program
+    {
+        private const decimal VatRate = 0.21m;
+
+        public static decimal CalculateTotalWithVat(List<OrderLine> lines)
+        {
+            if (lines == null)
+                throw new ArgumentNullException(nameof(lines));
+
+            if (lines.Count == 0)
+                return 0m;
+
+            decimal subtotal = 0m;
+
+            foreach (var line in lines)
+            {
+                if (line == null)
+                    continue;
+
+                if (line.Quantity <= 0)
+                    throw new ArgumentException(
+                        $"Quantity must be > 0 for product '{line.ProductName}'.",
+                        nameof(lines));
+
+                if (line.UnitPrice < 0)
+                    throw new ArgumentException(
+                        $"UnitPrice must be >= 0 for product '{line.ProductName}'.",
+                        nameof(lines));
+
+                subtotal += line.Quantity * line.UnitPrice;
+            }
+
+            decimal total = subtotal * (1m + VatRate);
+            return total;
+        }
+
+        static void Main()
+        {
+            var lines = new List<OrderLine>
+            {
+                new OrderLine { ProductName = "C# in Depth", Quantity = 2, UnitPrice = 39.95m },
+                new OrderLine { ProductName = "Clean Code", Quantity = 1, UnitPrice = 34.50m }
+            };
+
+            var total = CalculateTotalWithVat(lines);
+
+            Console.WriteLine($"Totaal incl. btw: {total:0.00} EUR");
+        }
+    }
+}

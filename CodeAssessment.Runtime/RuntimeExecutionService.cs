@@ -55,6 +55,24 @@ public class RuntimeExecutionService : IRuntimeExecutionService
             }
 
             var projDir = Path.Combine(work, "UserApp");
+            var projFile = Path.Combine(projDir, "UserApp.csproj");
+            try
+            {
+                if (File.Exists(projFile))
+                {
+                    var xml = await File.ReadAllTextAsync(projFile);
+                    if (xml.Contains("<TargetFramework>net10.0</TargetFramework>"))
+                    {
+                        xml = xml.Replace("<TargetFramework>net10.0</TargetFramework>", "<TargetFramework>net8.0</TargetFramework>");
+                        await File.WriteAllTextAsync(projFile, xml);
+                        Console.WriteLine($"[TESTS Runner]: TFM set to net8.0 in '{projFile}'");
+                    }
+                }
+            }
+            catch (Exception exTfm)
+            {
+                Console.WriteLine($"[TESTS Runner]: Failed to update TFM in '{projFile}': {exTfm.Message}");
+            }
 
             // 2) user code in Program.cs zetten
             Console.WriteLine("[TESTS Runner]: Writing user code");

@@ -70,6 +70,30 @@ public class TestRunnerService : ITestRunnerService
                 return result;
             }
 
+            // Force TFM net8.0 for the classlib so test project can reference it
+            var classlibProj = Path.Combine(work, "AssesmentSolution", "AssesmentSolution.csproj");
+            try
+            {
+                if (File.Exists(classlibProj))
+                {
+                    var xml = await File.ReadAllTextAsync(classlibProj);
+                    if (xml.Contains("<TargetFramework>net10.0</TargetFramework>"))
+                    {
+                        xml = xml.Replace("<TargetFramework>net10.0</TargetFramework>", "<TargetFramework>net8.0</TargetFramework>");
+                        await File.WriteAllTextAsync(classlibProj, xml);
+                        Log($"TFM updated to net8.0 in '{classlibProj}'");
+                    }
+                }
+                else
+                {
+                    Log($"classlib csproj not found to update TFM: '{classlibProj}'");
+                }
+            }
+            catch (Exception exTfm)
+            {
+                Log($"WARN failed to update TFM in '{classlibProj}': {exTfm.Message}");
+            }
+
             var solutionFile = Path.Combine(work, "AssesmentSolution", "Solution.cs");
             await File.WriteAllTextAsync(solutionFile, req.Code);
             Log($"Wrote candidate code to {solutionFile} (bytes={new FileInfo(solutionFile).Length})");

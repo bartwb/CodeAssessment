@@ -55,7 +55,14 @@ public static class ProcessRunner
         {
             Console.WriteLine($"PROC TIMEOUT file='{fileName}' args='{arguments}' wd='{workingDirectory}' afterMs={timeoutMs}");
             try { p.Kill(entireProcessTree: true); } catch { }
-            throw new TimeoutException($"Process '{fileName} {arguments}' timed out after {timeoutMs} ms.");
+            // log whatever we captured so far
+            var soSnippet = so.ToString();
+            var seSnippet = se.ToString();
+            if (soSnippet.Length > 1200) soSnippet = soSnippet[..1200] + "...(truncated)";
+            if (seSnippet.Length > 1200) seSnippet = seSnippet[..1200] + "...(truncated)";
+            Console.WriteLine($"PROC TIMEOUT PARTIAL STDOUT:\n{soSnippet}");
+            Console.WriteLine($"PROC TIMEOUT PARTIAL STDERR:\n{seSnippet}");
+            return new ProcessResult(-998, so.ToString(), se.ToString());
         }
 
         await exitedTcs.Task;

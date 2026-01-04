@@ -1,11 +1,3 @@
-C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\obj\Debug\net8.0\CodeAssessment.Api.csproj.AssemblyReference.cache
-C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\obj\Debug\net8.0\rpswa.dswa.cache.json
-C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\obj\Debug\net8.0\CodeAssessment.Api.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\obj\Debug\net8.0\CodeAssessment.Api.AssemblyInfoInputs.cache
-C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\obj\Debug\net8.0\CodeAssessment.Api.AssemblyInfo.cs
-C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\obj\Debug\net8.0\CodeAssessment.Api.csproj.CoreCompileInputs.cache
-C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\obj\Debug\net8.0\CodeAssessment.Api.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\obj\Debug\net8.0\CodeAssessment.Api.sourcelink.json
 C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\bin\Debug\net8.0\appsettings.json
 C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\bin\Debug\net8.0\analyzers\dotnet\NetAnalyzers\Microsoft.CodeAnalysis.CSharp.NetAnalyzers.dll
@@ -147,7 +139,15 @@ C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Spri
 C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\bin\Debug\net8.0\CodeAssessment.Runtime.pdb
 C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\bin\Debug\net8.0\CodeAssessment.Tests.pdb
 C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\bin\Debug\net8.0\CodeAssessment.Shared.pdb
+C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\obj\Debug\net8.0\CodeAssessment.Api.csproj.AssemblyReference.cache
+C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\obj\Debug\net8.0\CodeAssessment.Api.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\obj\Debug\net8.0\CodeAssessment.Api.AssemblyInfoInputs.cache
+C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\obj\Debug\net8.0\CodeAssessment.Api.AssemblyInfo.cs
+C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\obj\Debug\net8.0\CodeAssessment.Api.csproj.CoreCompileInputs.cache
 C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\obj\Debug\net8.0\CodeAssessment.Api.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\obj\Debug\net8.0\CodeAssessment.Api.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\obj\Debug\net8.0\CodeAssessment.Api.sourcelink.json
 C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\obj\Debug\net8.0\rjimswa.dswa.cache.json
 C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
 C:\Users\BartvandenHoven\OneDrive - Magnus Energy\Documenten\School\S8 temp\Sprint 4\ProtoTypeAzure\CodeAssessment\CodeAssessment.Api\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json

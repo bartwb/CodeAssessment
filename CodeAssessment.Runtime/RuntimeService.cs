@@ -6,6 +6,9 @@ namespace CodeAssessment.Runtime;
 
 public class RuntimeService : IRuntimeService
 {
+    private const int RestoreTimeoutMs = 1_200_000; // 20 min
+    private const int BuildTimeoutMs   = 900_000;   // 15 min
+
     public async Task<CompileResponse> CompileOnlyAsync(CodeRequest req)
     {
         var sw = Stopwatch.StartNew();
@@ -13,6 +16,7 @@ public class RuntimeService : IRuntimeService
         static int Len(string? s) => string.IsNullOrEmpty(s) ? 0 : s.Length;
         static string Clip(string? s, int max = 200) =>
             string.IsNullOrEmpty(s) ? "" : (s.Length <= max ? s : s[..max] + "...");
+        static bool IsTimeoutExit(int exitCode) => exitCode == -998;
 
         // tijdelijke werkmap
         var work = Path.Combine(Path.GetTempPath(), $"compile-{Guid.NewGuid():N}");
@@ -127,9 +131,9 @@ public class RuntimeService : IRuntimeService
             Console.WriteLine("COMPILE STEP step=restore_start");
             var restore = await ProcessRunner.RunAsync(
                 "dotnet",
-                "restore",
+                "restore --disable-parallel --verbosity minimal",
                 projDir,
-                120_000
+                RestoreTimeoutMs
             );
 
             Console.WriteLine("COMPILE DEBFUG project files:");
@@ -143,10 +147,15 @@ public class RuntimeService : IRuntimeService
                 $"COMPILE STEP step=restore_done " +
                 $"exitCode={restore.ExitCode} outLen={Len(restore.StdOut)} errLen={Len(restore.StdErr)} " +
                 $"elapsedMs={sw.ElapsedMilliseconds}"
-            );
+                );
 
             if (restore.ExitCode != 0)
             {
+                if (IsTimeoutExit(restore.ExitCode))
+                {
+                    Console.WriteLine($"COMPILE WARN restore timed out after {RestoreTimeoutMs}ms (exitCode={restore.ExitCode})");
+                }
+
                 Console.WriteLine(
                     $"COMPILE BAD reason=restore_failed " +
                     $"exitCode={restore.ExitCode} err='{Clip(restore.StdErr)}' " +
@@ -166,9 +175,9 @@ public class RuntimeService : IRuntimeService
             Console.WriteLine($"COMPILE DEBUG build workingDir='{projDir}'");
             var build = await ProcessRunner.RunAsync(
                 "dotnet",
-                "build --configuration Release",
+                "build --configuration Release --no-restore -m:1",
                 projDir,
-                180_000
+                BuildTimeoutMs
             );
 
             Console.WriteLine(
@@ -179,6 +188,11 @@ public class RuntimeService : IRuntimeService
 
             if (build.ExitCode != 0)
             {
+                if (IsTimeoutExit(build.ExitCode))
+                {
+                    Console.WriteLine($"COMPILE WARN build timed out after {BuildTimeoutMs}ms (exitCode={build.ExitCode})");
+                }
+
                 Console.WriteLine($"COMPILE WARN build_failed exitCode={build.ExitCode} errSnippet='{Clip(build.StdErr)}'");
             }
 

@@ -11,6 +11,11 @@ Console.WriteLine("BOOT: entering Program.cs");
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Force console logging at Debug so alle COMPILE/PROC logs zichtbaar zijn
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.SetMinimumLevel(LogLevel.Debug);
+
 // CORS zodat je straks vanuit je frontend kunt praten
 builder.Services.AddCors(o =>
     o.AddDefaultPolicy(p => p
@@ -162,7 +167,7 @@ var port = 6000;
 app.Urls.Clear();
 app.Urls.Add($"http://0.0.0.0:{port}");
 Console.WriteLine("Listening on: " + string.Join(", ", app.Urls));
-Console.WriteLine("Verison 5...");
+Console.WriteLine("Verison 0.4.4...");
 Console.WriteLine("ASPNETCORE_URLS=" + Environment.GetEnvironmentVariable("ASPNETCORE_URLS"));
 Console.WriteLine("PORT=" + Environment.GetEnvironmentVariable("PORT"));
 app.Run();

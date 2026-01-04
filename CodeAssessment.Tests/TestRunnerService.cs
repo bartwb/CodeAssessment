@@ -182,7 +182,7 @@ public class TestRunnerService : ITestRunnerService
             Log("STEP 4b: dotnet build");
             var rb = await ProcessRunner.RunAsync(
                 "dotnet",
-                $"build \"{testsCsprojRel}\" -c Release -m:1",
+                $"build \"{testsCsprojRel}\" -c Release -m:1 -p:RunAnalyzers=false -p:ContinuousIntegrationBuild=false",
                 work,
                 240_000
             );
@@ -208,7 +208,8 @@ public class TestRunnerService : ITestRunnerService
             Log("STEP 4c-1: dotnet test --list-tests (discovery only)");
             var list = await ProcessRunner.RunAsync(
                 "dotnet",
-                $"test \"{testsCsprojRel}\" -c Release --no-build --no-restore --list-tests --verbosity normal",
+                $"test \"{testsCsprojRel}\" -c Release --no-build --no-restore --list-tests --verbosity normal " +
+                "-p:RunAnalyzers=false -p:ContinuousIntegrationBuild=false",
                 work,
                 360_000
             );
@@ -227,7 +228,8 @@ public class TestRunnerService : ITestRunnerService
                 $"--results-directory \"{resultsDir}\" " +
                 $"--logger \"trx;LogFileName=results.trx\" " +
                 $"--diag \"{Path.Combine(resultsDir, "vstest-diag.txt")}\" " +
-                $"--blame --blame-hang --blame-hang-timeout 5m",
+                $"--blame --blame-hang --blame-hang-timeout 5m " +
+                "-p:RunAnalyzers=false -p:ContinuousIntegrationBuild=false",
                 work,
                 360_000
             );

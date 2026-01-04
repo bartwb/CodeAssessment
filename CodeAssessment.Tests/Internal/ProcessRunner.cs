@@ -6,7 +6,7 @@ namespace CodeAssessment.Tests.Internal;
 internal static class ProcessRunner
 {
     public static async Task<(int ExitCode, string StdOut, string StdErr)> RunAsync(
-        string file, string args, string workingDir, int timeoutMs = 120_000)
+        string file, string args, string workingDir, int timeoutMs = 600_000)
     {
         var psi = new ProcessStartInfo(file, args)
         {

@@ -56,7 +56,7 @@ public class TestRunnerService : ITestRunnerService
         {
             // 1) Kandidaten-classlib
             Log("STEP 1: dotnet new classlib");
-            var libInit = await ProcessRunner.RunAsync("dotnet", "new classlib -o AssesmentSolution", work);
+            var libInit = await ProcessRunner.RunAsync("dotnet", "new classlib -o AssesmentSolution --no-restore --nologo", work);
             Log($"libInit exit={libInit.ExitCode}");
             if (!string.IsNullOrWhiteSpace(libInit.StdErr)) Log($"libInit stderr:\n{TrimHuge(libInit.StdErr)}");
             if (!string.IsNullOrWhiteSpace(libInit.StdOut)) Log($"libInit stdout:\n{TrimHuge(libInit.StdOut)}");

@@ -103,12 +103,37 @@ public class RuntimeAnalysisService : IRuntimeAnalysisService
             {
                 Log($"PHASE init START wd={work} timeoutMs={InitTimeoutMs}");
                 var sw = Stopwatch.StartNew();
-                var init = await ProcessRunner.RunAsync(
-                    "dotnet",
-                    "new console -o UserApp --no-restore --nologo",
-                    work,
-                    InitTimeoutMs
-                );
+                async Task<ProcessRunner.ProcessResult> RunInitWithRetryAsync()
+                {
+                    var attempt = 1;
+                    while (true)
+                    {
+                        try
+                        {
+                            Log($"PHASE init attempt={attempt}");
+                            var r = await ProcessRunner.RunAsync(
+                                "dotnet",
+                                "new console -o UserApp --no-restore --nologo",
+                                work,
+                                InitTimeoutMs
+                            );
+                            if (r.ExitCode == 0) return r;
+                            if (attempt >= 2) return r;
+                            Log($"PHASE init retry after exitCode={r.ExitCode}");
+                            await Task.Delay(1500);
+                            attempt++;
+                        }
+                        catch (TimeoutException tex)
+                        {
+                            if (attempt >= 2) throw;
+                            Log($"PHASE init timeout, retrying once: {tex.Message}");
+                            await Task.Delay(1500);
+                            attempt++;
+                        }
+                    }
+                }
+
+                var init = await RunInitWithRetryAsync();
                 sw.Stop();
                 Log($"PHASE init END exitCode={init.ExitCode} elapsedMs={sw.ElapsedMilliseconds}");
                 AddPhase("init", sw, init);

@@ -62,6 +62,17 @@ public static class ProcessRunner
         p.WaitForExit();
 
         Console.WriteLine($"PROC END file='{fileName}' args='{arguments}' wd='{workingDirectory}' exitCode={p.ExitCode} outLen={so.Length} errLen={se.Length}");
+        if (p.ExitCode != 0)
+        {
+            var soSnippet = so.ToString();
+            var seSnippet = se.ToString();
+            if (soSnippet.Length > 1200) soSnippet = soSnippet[..1200] + "...(truncated)";
+            if (seSnippet.Length > 1200) seSnippet = seSnippet[..1200] + "...(truncated)";
+            Console.WriteLine($"PROC NONZERO stdout:\n{soSnippet}");
+            Console.WriteLine($"PROC NONZERO stderr:\n{seSnippet}");
+            Console.WriteLine($"PROC NONZERO PATH={Environment.GetEnvironmentVariable("PATH")}");
+            Console.WriteLine($"PROC NONZERO WORKDIR_EXISTS={Directory.Exists(workingDirectory)}");
+        }
 
         return new ProcessRunner.ProcessResult(p.ExitCode, so.ToString(), se.ToString());
     }

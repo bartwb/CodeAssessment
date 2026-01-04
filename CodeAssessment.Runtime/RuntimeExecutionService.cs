@@ -18,7 +18,32 @@ public class RuntimeExecutionService : IRuntimeExecutionService
 
             Console.WriteLine("[TESTS Runner]: Creating new project");
             // 1) nieuw console-project aanmaken
-            var init = await ProcessRunner.RunAsync("dotnet", "new console -n UserApp", work, 300_000);
+            async Task<ProcessRunner.ProcessResult> RunInitWithRetryAsync()
+            {
+                var attempt = 1;
+                while (true)
+                {
+                    try
+                    {
+                        Console.WriteLine($"[TESTS Runner]: init attempt={attempt}");
+                        var r = await ProcessRunner.RunAsync("dotnet", "new console -n UserApp --no-restore --nologo", work, 300_000);
+                        if (r.ExitCode == 0) return r;
+                        if (attempt >= 2) return r;
+                        Console.WriteLine($"[TESTS Runner]: init retry after exitCode={r.ExitCode}");
+                        await Task.Delay(1500);
+                        attempt++;
+                    }
+                    catch (TimeoutException tex)
+                    {
+                        if (attempt >= 2) throw;
+                        Console.WriteLine($"[TESTS Runner]: init timeout, retrying once: {tex.Message}");
+                        await Task.Delay(1500);
+                        attempt++;
+                    }
+                }
+            }
+
+            var init = await RunInitWithRetryAsync();
             if (init.ExitCode != 0)
             {
                 return new RunResponse(

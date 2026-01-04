@@ -30,12 +30,38 @@ public class RuntimeService : IRuntimeService
         {
             // 1) nieuw console-project
             Console.WriteLine("COMPILE STEP step=init_start");
-            var init = await ProcessRunner.RunAsync(
-                "dotnet",
-                "new console -n UserApp --no-restore --nologo",
-                work,
-                300_000
-            );
+
+            async Task<ProcessRunner.ProcessResult> RunInitWithRetryAsync()
+            {
+                var attempt = 1;
+                while (true)
+                {
+                    try
+                    {
+                        Console.WriteLine($"COMPILE INIT attempt={attempt}");
+                        var r = await ProcessRunner.RunAsync(
+                            "dotnet",
+                            "new console -n UserApp --no-restore --nologo",
+                            work,
+                            300_000
+                        );
+                        if (r.ExitCode == 0) return r;
+                        if (attempt >= 2) return r;
+                        Console.WriteLine($"COMPILE INIT retrying after nonzero exitCode={r.ExitCode}");
+                        await Task.Delay(1500);
+                        attempt++;
+                    }
+                    catch (TimeoutException tex)
+                    {
+                        if (attempt >= 2) throw;
+                        Console.WriteLine($"COMPILE INIT timeout, retrying once: {tex.Message}");
+                        await Task.Delay(1500);
+                        attempt++;
+                    }
+                }
+            }
+
+            var init = await RunInitWithRetryAsync();
 
             Console.WriteLine(
                 $"COMPILE STEP step=init_done " +

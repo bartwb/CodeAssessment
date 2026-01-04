@@ -26,7 +26,7 @@ public class RuntimeExecutionService : IRuntimeExecutionService
                     try
                     {
                         Console.WriteLine($"[TESTS Runner]: init attempt={attempt}");
-                        var r = await ProcessRunner.RunAsync("dotnet", "new console -n UserApp --no-restore --nologo", work, 300_000);
+                        var r = await ProcessRunner.RunAsync("dotnet", "new console -n UserApp --no-restore", work, 300_000);
                         if (r.ExitCode == 0) return r;
                         if (attempt >= 2) return r;
                         Console.WriteLine($"[TESTS Runner]: init retry after exitCode={r.ExitCode}");

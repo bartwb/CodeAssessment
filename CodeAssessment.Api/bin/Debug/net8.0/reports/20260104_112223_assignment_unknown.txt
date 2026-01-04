@@ -1,0 +1,116 @@
+﻿===== CODE ASSESSMENT RAPPORT =====
+Datum/tijd (UTC): 2026-01-04 11:22:23
+
+== Kandidaat ==
+Id      : -
+Naam    : -
+Email   : -
+
+== Opdracht ==
+AssignmentId  : -
+AssignmentName: -
+
+== Samenvatting ==
+Einds score     : 8
+AI score        : 8
+Compileert      : JA
+Alle tests groen: NEE
+
+== AI review ==
+Score: 8 / 10
+
+Algemene feedback:
+De code is correct en doet precies wat het moet doen: het print 'hi' naar de console. Het is een eenvoudige en correcte implementatie voor deze taak. Echter, er zijn enkele overwegingen voor robuustheid en onderhoudbaarheid, zelfs in eenvoudige scripts.
+
+Issues:
+- Regels 1, Severity: Info
+  Suggestie: Hoewel de code correct is, is het altijd goed om te overwegen of er een context is waarin deze code wordt uitgevoerd. Als dit deel uitmaakt van een grotere applicatie, kan het nuttig zijn om logging te gebruiken in plaats van Console.WriteLine voor betere controle over de output.
+
+== Static analysis ==
+Analyzer: .NET Code Analysis (Roslyn + analyzers)
+Aantal diagnostics: 5
+
+- CS0116 [Error] @ 2:9
+  A namespace cannot directly contain members such as fields, methods or statements
+- CS1026 [Error] @ 2:19
+  ) expected
+- CS1022 [Error] @ 2:19
+  Type or namespace definition, or end-of-file expected
+- SA1500 [Warning] @ 1:22
+  Braces for multi-line statements should not share line
+- SA1633 [Warning] @ 1:1
+  The file header is missing or not located at the top of the file.
+
+== Runtime ==
+ExitCode         : 0
+RunDurationMs    : 249
+RunTotalCpuTimeMs: 62
+RunAverageCpuPct : 2.1
+RunPeakWorkingSet: 0 MB
+
+Fases:
+- env_dotnet_info
+  DurationMs    : 269
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- env_nuget_sources
+  DurationMs    : 260
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- init
+  DurationMs    : 370
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- restore
+  DurationMs    : 812
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- build
+  DurationMs    : 1020
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- publish
+  DurationMs    : 622
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- run
+  DurationMs    : 249
+  CpuTimeMs     : 62
+  PeakWorkingSet: 0 MB
+  Samples count : 1
+  Samples range : 244 ms → 244 ms
+
+StdOut (snippet):
+  Determining projects to restore...
+  Restored C:\Users\BartvandenHoven\AppData\Local\Temp\run-analyze-e4e79254f9514ca2a6ec8dfb71db8189\UserApp\UserApp.csproj (in 53 ms).
+
+
+  UserApp -> C:\Users\BartvandenHoven\AppData\Local\Temp\run-analyze-e4e79254f9514ca2a6ec8dfb71db8189\UserApp\bin\Release\net10.0\UserApp.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.80...
+
+== Tests ==
+Binary score: FOUT
+Total       : 0
+Passed      : 0
+Failed      : 0
+
+Geen individuele tests geregistreerd.
+
+== dotnet test stderr ==
+Project `C:\Users\BartvandenHoven\AppData\Local\Temp\run-fbc6859b80d24d84acf32a806c18f760\AssesmentSolution\AssesmentSolution.csproj` cannot be added due to incompatible targeted frameworks between the two projects. Review the project you are trying to add and verify that is compatible with the following targets:
+    - net8.0
+
+
+== Ingezonden code ==
+Console.WriteLine("hi");

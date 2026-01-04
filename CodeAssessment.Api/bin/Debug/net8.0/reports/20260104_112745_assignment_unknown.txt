@@ -1,0 +1,102 @@
+﻿===== CODE ASSESSMENT RAPPORT =====
+Datum/tijd (UTC): 2026-01-04 11:27:45
+
+== Kandidaat ==
+Id      : -
+Naam    : -
+Email   : -
+
+== Opdracht ==
+AssignmentId  : -
+AssignmentName: -
+
+== Samenvatting ==
+Einds score     : 5
+AI score        : 5
+Compileert      : NEE
+Alle tests groen: NEE
+
+== AI review ==
+Score: 5 / 10
+
+Algemene feedback:
+The code is a simple one-liner that prints 'hi' to the console. While it is correct for its purpose, it lacks context and does not demonstrate any advanced C# features or practices. It is not possible to evaluate aspects like performance, security, or maintainability from this snippet alone.
+
+Issues:
+- Regels 1, Severity: Info
+  Suggestie: Consider providing more context or functionality to evaluate the code more thoroughly. As it stands, this is a basic console output with no additional logic or structure.
+
+== Static analysis ==
+Analyzer: .NET Code Analysis (Roslyn + analyzers)
+Aantal diagnostics: 5
+
+- CS0116 [Error] @ 2:9
+  A namespace cannot directly contain members such as fields, methods or statements
+- CS1026 [Error] @ 2:19
+  ) expected
+- CS1022 [Error] @ 2:19
+  Type or namespace definition, or end-of-file expected
+- SA1500 [Warning] @ 1:22
+  Braces for multi-line statements should not share line
+- SA1633 [Warning] @ 1:1
+  The file header is missing or not located at the top of the file.
+
+== Runtime ==
+ExitCode         : 127
+RunDurationMs    : -
+RunTotalCpuTimeMs: -
+RunAverageCpuPct : -
+RunPeakWorkingSet: -
+
+Fases:
+- env_dotnet_info
+  DurationMs    : 1895
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- env_nuget_sources
+  DurationMs    : 599
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- init
+  DurationMs    : 2426
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+StdErr:
+Error: Invalid option(s):
+-f net8.0
+   'net8.0' is not a valid value for -f. The possible values are:
+      net10.0   - Target net10.0
+
+For more information, run:
+   dotnet new console -h
+
+For details on the exit code, refer to https://aka.ms/templating-exit-codes#127
+
+
+== Tests ==
+Binary score: FOUT
+Total       : 0
+Passed      : 0
+Failed      : 0
+
+Geen individuele tests geregistreerd.
+
+== dotnet test stderr ==
+Error: Invalid option(s):
+-f net8.0
+   'net8.0' is not a valid value for -f. The possible values are:
+      net10.0          - Target net10.0
+      netstandard2.0   - Target netstandard2.0
+      netstandard2.1   - Target netstandard2.1
+
+For more information, run:
+   dotnet new classlib -h
+
+For details on the exit code, refer to https://aka.ms/templating-exit-codes#127
+
+
+== Ingezonden code ==
+Console.WriteLine("hi");

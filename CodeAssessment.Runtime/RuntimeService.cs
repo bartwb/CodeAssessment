@@ -41,7 +41,7 @@ public class RuntimeService : IRuntimeService
                         Console.WriteLine($"COMPILE INIT attempt={attempt}");
                         var r = await ProcessRunner.RunAsync(
                             "dotnet",
-                            "new console -n UserApp --no-restore --nologo",
+                            "new console -n UserApp --no-restore",
                             work,
                             300_000
                         );

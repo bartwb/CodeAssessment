@@ -113,7 +113,7 @@ public class RuntimeAnalysisService : IRuntimeAnalysisService
                             Log($"PHASE init attempt={attempt}");
                             var r = await ProcessRunner.RunAsync(
                                 "dotnet",
-                                "new console -o UserApp --no-restore --nologo",
+                                "new console -o UserApp --no-restore",
                                 work,
                                 InitTimeoutMs
                             );

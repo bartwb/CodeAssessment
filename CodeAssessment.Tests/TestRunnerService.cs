@@ -189,6 +189,11 @@ public class TestRunnerService : ITestRunnerService
                 360_000
             );
             Log($"list-tests exit={list.ExitCode}");
+            if (list.ExitCode != 0)
+            {
+                Log($"list-tests stdout:\n{TrimHuge(list.StdOut)}");
+                Log($"list-tests stderr:\n{TrimHuge(list.StdErr)}");
+            }
 
             Log("STEP 4c: dotnet test");
             Log("ENV: dotnet --info");
@@ -257,6 +262,15 @@ public class TestRunnerService : ITestRunnerService
             }).ToList();
 
             result.BinaryScore = (total > 0 && failed == 0) ? "GOED" : "FOUT";
+            Log($"SUMMARY tests total={total} passed={passed} failed={failed} exitCode={rt.ExitCode}");
+            if (failed > 0 && parsedTests.Count > 0)
+            {
+                var firstFail = parsedTests.FirstOrDefault(t => t.outcome != "Passed");
+                if (firstFail.name != null)
+                {
+                    Log($"SUMMARY first failure: {firstFail.name} -> {firstFail.outcome} msg='{firstFail.message}'");
+                }
+            }
             return result;
         }
         catch (Exception ex)

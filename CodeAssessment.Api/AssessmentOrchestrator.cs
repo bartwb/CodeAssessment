@@ -29,6 +29,7 @@ public class AssessmentOrchestrator : IAssessmentOrchestrator
 
     public async Task<FullAnalysisResponse> AnalyzeAsync(CodeRequest req)
     {
+        Console.WriteLine($"[ANALYZE] START assignmentId='{req.AssignmentId}' candidateId='{req.CandidateId}'");
         var aiResult        = await _ai.ReviewAsync(req);
         var compileResult   = await _runtimeCompile.CompileOnlyAsync(req);
         var staticResult    = await _staticAnalysis.AnalyzeAsync(req, "Warning");
@@ -52,7 +53,14 @@ public class AssessmentOrchestrator : IAssessmentOrchestrator
             Tests          = testsResult
         };
 
-         try
+        // Debug/trace samenvatting in de ACA logs
+        Console.WriteLine(
+            $"[ANALYZE SUMMARY] compile={compileResult.Success} runtimeExit={(runtimeAnalysis?.ExitCode)} " +
+            $"testsTotal={testsResult.Total} testsFailed={testsResult.Failed} aiScore={aiResult.FinalScore} " +
+            $"staticDiagnostics={(staticResult?.Diagnostics?.Count ?? 0)}"
+        );
+
+        try
         {
             var reportPath = await _reportWriter.WriteReportAsync(req, response);
             Console.WriteLine($"[REPORT] Rapport weggeschreven naar: {reportPath}");
@@ -63,6 +71,7 @@ public class AssessmentOrchestrator : IAssessmentOrchestrator
             Console.WriteLine($"[REPORT] Fout bij wegschrijven rapport: {ex}");
         }
 
+        Console.WriteLine($"[ANALYZE] DONE assignmentId='{req.AssignmentId}' candidateId='{req.CandidateId}'");
         return response;
     }
 }

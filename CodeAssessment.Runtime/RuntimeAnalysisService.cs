@@ -207,6 +207,9 @@ public class RuntimeAnalysisService : IRuntimeAnalysisService
                     foreach (var f in SafeListFiles(projDir, 50))
                         Log($"  FILE {f}");
 
+                    Log($"BUILD STDOUT:\n{rb.StdOut}");
+                    Log($"BUILD STDERR:\n{rb.StdErr}");
+
                     result.StdOut = JoinOut(rr.StdOut, rb.StdOut);
                     result.StdErr = JoinErr(rr.StdErr, rb.StdErr);
                     result.ExitCode = rb.ExitCode;

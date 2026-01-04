@@ -153,6 +153,11 @@ public class RuntimeService : IRuntimeService
                 $"elapsedMs={sw.ElapsedMilliseconds}"
             );
 
+            if (build.ExitCode != 0)
+            {
+                Console.WriteLine($"COMPILE WARN build_failed exitCode={build.ExitCode} errSnippet='{Clip(build.StdErr)}'");
+            }
+
             stdOut = string.Join("\n\n", restore.StdOut, build.StdOut);
             stdErr = string.Join("\n\n", restore.StdErr, build.StdErr);
             exitCode = build.ExitCode;

@@ -1,120 +1,131 @@
 using System;
-using System.Collections.Generic;
-using Assessment.Junior;
+using Assessment.Ciratum;
 using Xunit;
 
-namespace CodeAssessment.Tests.Template 
+namespace CodeAssessment.Tests.Template
 {
-    public class CalculateTotalWithVatTests
+    public class ObjectMapperTests
     {
-        private static List<OrderLine> MakeLines(
-            params (string product, int quantity, decimal unitPrice)[] lines)
+        // Extra types uitsluitend voor tests (type-mismatch scenarios)
+        private class SourceWithStringAge
         {
-            var list = new List<OrderLine>();
-            foreach (var l in lines)
-            {
-                list.Add(new OrderLine
-                {
-                    ProductName = l.product,
-                    Quantity = l.quantity,
-                    UnitPrice = l.unitPrice
-                });
-            }
-            return list;
+            public string FirstName { get; set; } = "X";
+            public string LastName { get; set; } = "Y";
+            public string Age { get; set; } = "28"; // mismatch: string vs int
+        }
+
+        private class DestWithIntAgeAndDefaultRole
+        {
+            public string FirstName { get; set; } = "";
+            public string LastName { get; set; } = "";
+            public int Age { get; set; }
+            public string Role { get; set; } = "User"; // moet default blijven bij mismatch / ontbrekend
         }
 
         [Fact]
-        public void EmptyList_ReturnsZero()
+        public void NullSource_ThrowsArgumentNullException()
+        {
+            // Act + Assert
+            Assert.Throws<ArgumentNullException>(() =>
+                ObjectMapper.Map<UserDto, User>(null!)
+            );
+        }
+
+        [Fact]
+        public void MatchingProperties_AreCopiedToDestination()
         {
             // Arrange
-            var lines = new List<OrderLine>();
+            var dto = new UserDto
+            {
+                FirstName = "Ada",
+                LastName = "Lovelace",
+                Age = 28
+            };
 
             // Act
-            var total = Program.CalculateTotalWithVat(lines);
+            var user = ObjectMapper.Map<UserDto, User>(dto);
 
             // Assert
-            Assert.Equal(0m, total);
+            Assert.Equal("Ada", user.FirstName);
+            Assert.Equal("Lovelace", user.LastName);
+            Assert.Equal(28, user.Age);
         }
 
         [Fact]
-        public void NullList_ThrowsArgumentNullException()
-        {
-            // Act + Assert
-            Assert.Throws<ArgumentNullException>(
-                () => Program.CalculateTotalWithVat(null!)
-            );
-        }
-
-        [Fact]
-        public void NegativeOrZeroQuantity_ThrowsArgumentException()
+        public void DestinationOnlyProperty_RemainsDefaultValue()
         {
             // Arrange
-            var lines = MakeLines(
-                ("C# in Depth", 0, 39.95m) // quantity = 0 → fout
-            );
-
-            // Act + Assert
-            var ex = Assert.Throws<ArgumentException>(
-                () => Program.CalculateTotalWithVat(lines)
-            );
-
-            Assert.Contains("Quantity must be > 0", ex.Message);
-        }
-
-        [Fact]
-        public void NegativeUnitPrice_ThrowsArgumentException()
-        {
-            // Arrange
-            var lines = MakeLines(
-                ("C# in Depth", 1, -10m)
-            );
-
-            // Act + Assert
-            var ex = Assert.Throws<ArgumentException>(
-                () => Program.CalculateTotalWithVat(lines)
-            );
-
-            Assert.Contains("UnitPrice must be >= 0", ex.Message);
-        }
-
-        [Fact]
-        public void NullOrderLine_IsIgnored()
-        {
-            // Arrange
-            var lines = new List<OrderLine?>
+            var dto = new UserDto
             {
-                new OrderLine { ProductName = "A", Quantity = 1, UnitPrice = 10m },
-                null,
-                new OrderLine { ProductName = "B", Quantity = 2, UnitPrice = 5m }
-            }! as List<OrderLine>; // we weten dat dit runtime klopt
+                FirstName = "Ada",
+                LastName = "Lovelace",
+                Age = 28
+            };
 
             // Act
-            var total = Program.CalculateTotalWithVat(lines);
-
-            // subtotal = 1*10 + 2*5 = 20 → *1.21 = 24.20
-            decimal subtotal = 1 * 10m + 2 * 5m;
-            decimal expected = subtotal * 1.21m;
-
-            Assert.Equal(expected, total);
-        }
-
-        [Fact]
-        public void MultipleLines_ComputesCorrectTotal()
-        {
-            // Arrange: jouw voorbeeld uit Main()
-            var lines = MakeLines(
-                ("C# in Depth", 2, 39.95m),
-                ("Clean Code", 1, 34.50m)
-            );
-
-            // Act
-            var total = Program.CalculateTotalWithVat(lines);
+            var user = ObjectMapper.Map<UserDto, User>(dto);
 
             // Assert
-            decimal subtotal = 2 * 39.95m + 1 * 34.50m;
-            decimal expected = subtotal * 1.21m; // 21% btw
+            // Role bestaat niet op DTO → moet "User" blijven (ongemoeid laten)
+            Assert.Equal("User", user.Role);
+        }
 
-            Assert.Equal(expected, total);
+        [Fact]
+        public void MissingSourceProperty_DoesNotThrow_AndLeavesDestinationUnchanged()
+        {
+            // Arrange
+            // We mappen van UserDto naar een dest-type met extra property (Role).
+            var dto = new UserDto { FirstName = "Ada", LastName = "Lovelace", Age = 28 };
+
+            // Act
+            var dest = ObjectMapper.Map<UserDto, DestWithIntAgeAndDefaultRole>(dto);
+
+            // Assert
+            Assert.Equal("Ada", dest.FirstName);
+            Assert.Equal("Lovelace", dest.LastName);
+            Assert.Equal(28, dest.Age);
+            Assert.Equal("User", dest.Role); // extra dest property blijft default
+        }
+
+        [Fact]
+        public void TypeMismatch_DoesNotThrow_AndLeavesDestinationDefault()
+        {
+            // Arrange
+            // Source.Age is string, Dest.Age is int → mismatch → dest.Age moet default blijven en geen exception
+            var src = new SourceWithStringAge
+            {
+                FirstName = "Ada",
+                LastName = "Lovelace",
+                Age = "28"
+            };
+
+            // Act
+            var dest = ObjectMapper.Map<SourceWithStringAge, DestWithIntAgeAndDefaultRole>(src);
+
+            // Assert
+            // Namen matchen en zijn compatibel → wel gekopieerd
+            Assert.Equal("Ada", dest.FirstName);
+            Assert.Equal("Lovelace", dest.LastName);
+
+            // Age mismatch → blijft default(int) = 0
+            Assert.Equal(0, dest.Age);
+
+            // Role bestaat niet op source → blijft default
+            Assert.Equal("User", dest.Role);
+        }
+
+        [Fact]
+        public void ReturnsNewInstance_EachCall()
+        {
+            // Arrange
+            var dto = new UserDto { FirstName = "Ada", LastName = "Lovelace", Age = 28 };
+
+            // Act
+            var a = ObjectMapper.Map<UserDto, User>(dto);
+            var b = ObjectMapper.Map<UserDto, User>(dto);
+
+            // Assert
+            Assert.NotSame(a, b); // “pure” mapping: nieuwe instance per call
         }
     }
 }

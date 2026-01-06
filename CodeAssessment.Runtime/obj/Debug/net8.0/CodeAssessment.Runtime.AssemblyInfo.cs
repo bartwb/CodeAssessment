@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CodeAssessment.Runtime")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ba848e641a62bf28b117b61e2bdd5f27418b5efc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4bee96af85980d270b30dd6fef46da6ef8052f74")]
 [assembly: System.Reflection.AssemblyProductAttribute("CodeAssessment.Runtime")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CodeAssessment.Runtime")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

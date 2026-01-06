@@ -1,0 +1,466 @@
+﻿===== CODE ASSESSMENT RAPPORT =====
+Datum/tijd (UTC): 2026-01-06 09:14:18
+
+== Kandidaat ==
+Id      : demo-123
+Naam    : -
+Email   : -
+
+== Opdracht ==
+AssignmentId  : csharp-senior-3
+AssignmentName: -
+
+== Samenvatting ==
+Einds score     : 8
+AI score        : 8
+Compileert      : JA
+Alle tests groen: JA
+
+== AI review ==
+Score: 8 / 10
+
+Algemene feedback:
+The code is generally well-structured and follows good practices such as caching and type safety. It effectively maps properties between objects of different types using reflection. However, there are minor improvements that can be made in terms of performance and robustness.
+
+Issues:
+- Regels 23, Severity: Warning
+  Suggestie: Consider using a ConcurrentDictionary instead of a Dictionary with a lock for better performance and scalability in multi-threaded environments.
+- Regels 38, Severity: Info
+  Suggestie: The use of reflection can be expensive. Ensure that this mapping is necessary and consider alternatives if performance becomes an issue.
+- Regels 56, Severity: Info
+  Suggestie: The method BuildMap uses nested loops which can be optimized if the number of properties is large. Consider using a dictionary to map source properties by name for faster lookup.
+- Regels 80, Severity: Info
+  Suggestie: The default value for string properties is set to an empty string. Consider using nullability annotations to better express intent and handle null values explicitly.
+
+== Static analysis ==
+Analyzer: .NET Code Analysis (Roslyn + analyzers)
+Aantal diagnostics: 65
+
+- CS8632 [Warning] @ 70:29
+  The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
+- CA1852 [Warning] @ 129:11
+  Type 'Program' can be sealed because it has no subtypes in its containing assembly and is not externally visible
+- RCS1102 [Warning] @ 129:11
+  Make class static
+- RCS1165 [Warning] @ 29:17
+  Unconstrained type parameter checked for null
+- RCS1181 [Warning] @ 98:5
+  Convert comment to documentation comment
+- RCS1181 [Warning] @ 112:9
+  Convert comment to documentation comment
+- SA1101 [Warning] @ 14:13
+  Prefix local calls with this
+- SA1101 [Warning] @ 15:13
+  Prefix local calls with this
+- SA1122 [Warning] @ 118:51
+  Use string.Empty for empty strings
+- SA1122 [Warning] @ 124:51
+  Use string.Empty for empty strings
+- SA1200 [Warning] @ 1:1
+  Using directive should appear within a namespace declaration
+- SA1200 [Warning] @ 2:1
+  Using directive should appear within a namespace declaration
+- SA1200 [Warning] @ 3:1
+  Using directive should appear within a namespace declaration
+- SA1201 [Warning] @ 12:16
+  A constructor should not follow a property
+- SA1204 [Warning] @ 19:25
+  Static members should appear before non-static members
+- SA1309 [Warning] @ 21:85
+  Field '_cache' should not begin with an underscore
+- SA1309 [Warning] @ 24:40
+  Field '_lock' should not begin with an underscore
+- SA1400 [Warning] @ 129:11
+  Element 'Program' should declare an access modifier
+- SA1400 [Warning] @ 131:21
+  Element 'Main' should declare an access modifier
+- SA1402 [Warning] @ 7:18
+  File may only contain a single type
+- SA1402 [Warning] @ 19:25
+  File may only contain a single type
+- SA1402 [Warning] @ 99:18
+  File may only contain a single type
+- SA1402 [Warning] @ 106:18
+  File may only contain a single type
+- SA1402 [Warning] @ 116:18
+  File may only contain a single type
+- SA1402 [Warning] @ 122:18
+  File may only contain a single type
+- SA1413 [Warning] @ 137:17
+  Use trailing comma in multi-line initializers
+- SA1413 [Warning] @ 149:17
+  Use trailing comma in multi-line initializers
+- SA1503 [Warning] @ 30:17
+  Braces should not be omitted
+- SA1503 [Warning] @ 68:21
+  Braces should not be omitted
+- SA1503 [Warning] @ 75:25
+  Braces should not be omitted
+- SA1503 [Warning] @ 78:25
+  Braces should not be omitted
+- SA1503 [Warning] @ 82:25
+  Braces should not be omitted
+- SA1516 [Warning] @ 10:1
+  Elements should be separated by blank line
+- SA1516 [Warning] @ 109:1
+  Elements should be separated by blank line
+- SA1516 [Warning] @ 110:1
+  Elements should be separated by blank line
+- SA1516 [Warning] @ 119:1
+  Elements should be separated by blank line
+- SA1516 [Warning] @ 102:1
+  Elements should be separated by blank line
+- SA1516 [Warning] @ 125:1
+  Elements should be separated by blank line
+- SA1516 [Warning] @ 103:1
+  Elements should be separated by blank line
+- SA1516 [Warning] @ 126:1
+  Elements should be separated by blank line
+- SA1600 [Warning] @ 109:23
+  Elements should be documented
+- SA1600 [Warning] @ 9:29
+  Elements should be documented
+- SA1600 [Warning] @ 108:23
+  Elements should be documented
+- SA1600 [Warning] @ 10:29
+  Elements should be documented
+- SA1600 [Warning] @ 103:20
+  Elements should be documented
+- SA1600 [Warning] @ 101:23
+  Elements should be documented
+- SA1600 [Warning] @ 102:23
+  Elements should be documented
+- SA1600 [Warning] @ 110:20
+  Elements should be documented
+- SA1600 [Warning] @ 113:23
+  Elements should be documented
+- SA1600 [Warning] @ 99:18
+  Elements should be documented
+- SA1600 [Warning] @ 7:18
+  Elements should be documented
+- SA1600 [Warning] @ 106:18
+  Elements should be documented
+- SA1600 [Warning] @ 118:23
+  Elements should be documented
+- SA1600 [Warning] @ 116:18
+  Elements should be documented
+- SA1600 [Warning] @ 122:18
+  Elements should be documented
+- SA1600 [Warning] @ 119:24
+  Elements should be documented
+- SA1600 [Warning] @ 124:23
+  Elements should be documented
+- SA1600 [Warning] @ 125:24
+  Elements should be documented
+- SA1600 [Warning] @ 126:25
+  Elements should be documented
+- SA1600 [Warning] @ 129:11
+  Elements should be documented
+- SA1600 [Warning] @ 19:25
+  Elements should be documented
+- SA1600 [Warning] @ 12:16
+  Elements should be documented
+- SA1600 [Warning] @ 26:29
+  Elements should be documented
+- SA1633 [Warning] @ 1:1
+  The file header is missing or not located at the top of the file.
+- SA1649 [Warning] @ 7:18
+  File name should match first type name
+
+== Runtime ==
+ExitCode         : 0
+RunDurationMs    : 321
+RunTotalCpuTimeMs: 125
+RunAverageCpuPct : 3.2
+RunPeakWorkingSet: 0 MB
+
+Fases:
+- env_dotnet_info
+  DurationMs    : 271
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- env_nuget_sources
+  DurationMs    : 304
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- init
+  DurationMs    : 376
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- restore
+  DurationMs    : 1464
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- build
+  DurationMs    : 1429
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- publish
+  DurationMs    : 668
+  CpuTimeMs     : -
+  PeakWorkingSet: -
+
+- run
+  DurationMs    : 321
+  CpuTimeMs     : 125
+  PeakWorkingSet: 0 MB
+  Samples count : 1
+  Samples range : 315 ms → 315 ms
+
+StdOut (snippet):
+  Determining projects to restore...
+  Restored C:\Users\BartvandenHoven\AppData\Local\Temp\run-analyze-f27f871d58414a7c9dafc78925322e36\UserApp\UserApp.csproj (in 267 ms).
+
+
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-analyze-f27f871d58414a7c9dafc78925322e36\UserApp\Program.cs(40,50): warning CS8600: Converting null literal or possible null value to non-nullable type. [C:\Users\BartvandenHo...
+
+== Tests ==
+Binary score: GOED
+Total       : 6
+Passed      : 6
+Failed      : 0
+
+Details per test:
+- CodeAssessment.Tests.Template.ObjectMapperTests.DestinationOnlyProperty_RemainsDefaultValue → Passed
+- CodeAssessment.Tests.Template.ObjectMapperTests.NullSource_ThrowsArgumentNullException → Passed
+- CodeAssessment.Tests.Template.ObjectMapperTests.MatchingProperties_AreCopiedToDestination → Passed
+- CodeAssessment.Tests.Template.ObjectMapperTests.MissingSourceProperty_DoesNotThrow_AndLeavesDestinationUnchanged → Passed
+- CodeAssessment.Tests.Template.ObjectMapperTests.ReturnsNewInstance_EachCall → Passed
+- CodeAssessment.Tests.Template.ObjectMapperTests.TypeMismatch_DoesNotThrow_AndLeavesDestinationDefault → Passed
+
+== dotnet test stdout ==
+Build started 1/6/2026 10:14:03 AM.
+     1>Project "C:\Users\BartvandenHoven\AppData\Local\Temp\run-baa3a4e66d3c478c939ccef837eeca41\Tests\Tests.csproj" on node 1 (Restore target(s)).
+     1>_GetAllRestoreProjectPathItems:
+         Determining projects to restore...
+       Restore:
+         X.509 certificate chain validation will use the default trust store selected by .NET for code signing.
+         X.509 certificate chain validation will use the default trust store selected by .NET for timestamping.
+         Restoring packages for C:\Users\BartvandenHoven\AppData\Local\Temp\run-baa3a4e66d3c478c939ccef837eeca41\Tests\Tests.csproj...
+           GET https://api.nuget.org/v3-flatcontainer/microsoft.net.test.sdk/index.json
+           OK https://api.nuget.org/v3-flatcontainer/microsoft.net.test.sdk/index.json 280ms
+           CACHE https://api.nuget.org/v3/vulnerabilities/index.json
+           CACHE https://api.nuget.org/v3-vulnerabilities/2026.01.03.11.41.01/vulnerability.base.json
+           CACHE https://api.nuget.org/v3-vulnerabilities/2026.01.03.11.41.01/2026.01.05.17.41.05/vulnerability.update.json
+         Generating MSBuild file C:\Users\BartvandenHoven\AppData\Local\Temp\run-baa3a4e66d3c478c939ccef837eeca41\Tests\obj\Tests.csproj.nuget.g.props.
+         Generating MSBuild file C:\Users\BartvandenHoven\AppData\Local\Temp\run-baa3a4e66d3c478c939ccef837eeca41\Tests\obj\Tests.csproj.nuget.g.targets.
+         Writing assets file to disk. Path: C:\Users\BartvandenHoven\AppData\Local\Temp\run-baa3a4e66d3c478c939ccef837eeca41\Tests\obj\project.assets.json
+         Restored C:\Users\BartvandenHoven\AppData\Local\Temp\run-baa3a4e66d3c478c939ccef837eeca41\Tests\Tests.csproj (in 1.35 sec).
+         Restoring packages for C:\Users\BartvandenHoven\AppData\Local\Temp\run-baa3a4e66d3c478c939ccef837eeca41\AssesmentSolution\AssesmentSolution.csproj...
+         Generating MSBuild file C:\Users\BartvandenHoven\AppData\Local\Temp\run-baa3a4e66d3c478c939ccef837eeca41\AssesmentSolution\obj\AssesmentSolution.csproj.nuget.g.props.
+         Generating MSBuild file C:\Users\BartvandenHoven\AppData\Local\Temp\run-baa3a4e66d3c478c939ccef837eeca41\AssesmentSolution\obj\AssesmentSolution.csproj.nuget.g.targets.
+         Writing assets file to disk. Path: C:\Users\BartvandenHoven\AppData\Local\Temp\run-baa3a4e66d3c478c939ccef837eeca41\AssesmentSolution\obj\project.assets.json
+         Restored C:\Users\BartvandenHoven\AppData\Local\Temp\run-baa3a4e66d3c478c939ccef837eeca41\AssesmentSolution\AssesmentSolution.csproj (in 3 ms).
+         
+         NuGet Config files used:
+             C:\Users\BartvandenHoven\AppData\Roaming\NuGet\NuGet.Config
+         
+         Feeds used:
+             https://api.nuget.org/v3/index.json
+     1>Done Building Project "C:\Users\BartvandenHoven\AppData\Local\Temp\run-baa3a4e66d3c478c939ccef837eeca41\Tests\Tests.csproj" (Restore target(s)).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.89
+
+
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-baa3a4e66d3c478c939ccef837eeca41\AssesmentSolution\Solution.cs(40,50): warning CS8600: Converting null literal or possible null value to non-nullable type. [C:\Users\BartvandenHoven\AppData\Local\Temp\run-baa3a4e66d3c478c939ccef837eeca41\AssesmentSolution\AssesmentSolution.csproj]
+  AssesmentSolution -> C:\Users\BartvandenHoven\AppData\Local\Temp\run-baa3a4e66d3c478c939ccef837eeca41\AssesmentSolution\bin\Release\net8.0\AssesmentSolution.dll
+  Tests -> C:\Users\BartvandenHoven\AppData\Local\Temp\run-baa3a4e66d3c478c939ccef837eeca41\Tests\bin\Release\net8.0\Tests.dll
+
+Build succeeded.
+
+C:\Users\BartvandenHoven\AppData\Local\Temp\run-baa3a4e66d3c478c939ccef837eeca41\AssesmentSolution\Solution.cs(40,50): warning CS8600: Converting null literal or possible null value to non-nullable type. [C:\Users\BartvandenHoven\AppData\Local\Temp\run-baa3a4e66d3c478c939ccef837eeca41\AssesmentSolution\AssesmentSolution.csproj]
+    1 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:05.52
+
+
+Test run for C:\Users\BartvandenHoven\AppData\Local\Temp\run-baa3a4e66d3c478c939ccef837eeca41\Tests\bin\Release\net8.0\Tests.dll (.NETCoreApp,Version=v8.0)
+VSTest version 18.0.1-release-25523-111 (x64)
+
+Starting test execution, please wait...
+Logging Vstest Diagnostics in file: C:\Users\BartvandenHoven\AppData\Local\Temp\run-baa3a4e66d3c478c939ccef837eeca41\_results\vstest-diag.txt
+A total of 1 test files matched the specified pattern.
+Data collector 'Blame' message: All tests finished running, Sequence file will not be generated.
+Results File: C:\Users\BartvandenHoven\AppData\Local\Temp\run-baa3a4e66d3c478c939ccef837eeca41\_results\results.trx
+
+Passed!  - Failed:     0, Passed:     6, Skipped:     0, Total:     6, Duration: 548 ms - Tests.dll (net8.0)
+
+
+== Ingezonden code ==
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+
+namespace Assessment.Ciratum
+{
+    public class PropertyMap
+    {
+        public PropertyInfo Source { get; }
+        public PropertyInfo Dest { get; }
+
+        public PropertyMap(PropertyInfo source, PropertyInfo dest)
+        {
+            Source = source;
+            Dest = dest;
+        }
+    }
+
+    public static class ObjectMapper
+    {
+        private static readonly Dictionary<(Type Source, Type Dest), PropertyMap[]> _cache
+            = new Dictionary<(Type, Type), PropertyMap[]>();
+
+        private static readonly object _lock = new object();
+
+        public static TDest Map<TSource, TDest>(TSource source)
+            where TDest : new()
+        {
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+
+            var srcType = typeof(TSource);
+            var destType = typeof(TDest);
+            var key = (Source: srcType, Dest: destType);
+
+            PropertyMap[] maps;
+
+            lock (_lock)
+            {
+                if (!_cache.TryGetValue(key, out maps))
+                {
+                    maps = BuildMap(srcType, destType);
+                    _cache[key] = maps;
+                }
+            }
+
+            var dest = new TDest();
+
+            foreach (var map in maps)
+            {
+                var value = map.Source.GetValue(source);
+                map.Dest.SetValue(dest, value);
+            }
+
+            return dest;
+        }
+
+        private static PropertyMap[] BuildMap(Type srcType, Type destType)
+        {
+            var srcProps = srcType.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            var destProps = destType.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+
+            var result = new List<PropertyMap>();
+
+            foreach (var destProp in destProps)
+            {
+                if (!destProp.CanWrite)
+                    continue;
+
+                PropertyInfo? match = null;
+
+                foreach (var srcProp in srcProps)
+                {
+                    if (!srcProp.CanRead)
+                        continue;
+
+                    if (!string.Equals(srcProp.Name, destProp.Name, StringComparison.Ordinal))
+                        continue;
+
+                    // Type-veiligheid: destType moet toewijsbaar zijn vanuit sourceType
+                    if (!destProp.PropertyType.IsAssignableFrom(srcProp.PropertyType))
+                        continue;
+
+                    match = srcProp;
+                    break;
+                }
+
+                if (match != null)
+                {
+                    result.Add(new PropertyMap(match, destProp));
+                }
+            }
+
+            return result.ToArray();
+        }
+    }
+
+    // Aangepast domein volgens het template (FirstName/LastName/Age + Role default)
+    public class UserDto
+    {
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public int Age { get; set; }
+    }
+
+    public class User
+    {
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public int Age { get; set; }
+
+        // Bestaat niet op DTO, blijft default (ongemoeid laten)
+        public string Role { get; set; } = "User";
+    }
+
+    public class OrderDto
+    {
+        public string OrderNumber { get; set; } = "";
+        public decimal Total { get; set; }
+    }
+
+    public class Order
+    {
+        public string OrderNumber { get; set; } = "";
+        public decimal Total { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            var dto = new UserDto
+            {
+                FirstName = "Ada",
+                LastName = "Lovelace",
+                Age = 28
+            };
+
+            var user = ObjectMapper.Map<UserDto, User>(dto);
+
+            Console.WriteLine("=== User mapping ===");
+            Console.WriteLine($"{user.FirstName} {user.LastName} ({user.Age}) - Role: {user.Role}");
+            Console.WriteLine();
+
+            var orderDto = new OrderDto
+            {
+                OrderNumber = "ORD-123",
+                Total = 123.45m
+            };
+
+            var order = ObjectMapper.Map<OrderDto, Order>(orderDto);
+
+            Console.WriteLine("=== Order mapping ===");
+            Console.WriteLine($"OrderNumber: {order.OrderNumber}");
+            Console.WriteLine($"Total:       {order.Total}");
+            Console.WriteLine($"CreatedAt:   {order.CreatedAt:O}");
+            Console.WriteLine();
+
+            // Tweede call met dezelfde type-combinatie gebruikt nu de cache:
+            var order2 = ObjectMapper.Map<OrderDto, Order>(orderDto);
+            Console.WriteLine("Tweede mapping voor hetzelfde typepaar (cache wordt gebruikt).");
+        }
+    }
+}
